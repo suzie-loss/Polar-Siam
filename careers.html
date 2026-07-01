@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>POLAR SIAM — We're Hiring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=4" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.160.0",
+    "lenis": "https://esm.sh/lenis@1.1.20",
+    "animejs": "https://esm.sh/animejs@4.0.2"
+  }
+}
+</script>
+<style>
+  .hire { min-height: 90svh; display: grid; place-items: center; text-align: center; padding: 9rem 1.5rem 3rem; }
+  .hire__idx { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 1.6rem; }
+  .hire h1 { font-family: var(--f-serif); font-weight: 500; text-transform: uppercase; font-size: clamp(3rem, 12vw, 9rem); line-height: 0.86; }
+  .hire h1 em { font-style: italic; text-transform: none; }
+  .hire p { color: var(--ink-dim); max-width: 46ch; margin: 2rem auto 0; line-height: 1.7; }
+  .hire a.mail { color: var(--ink); border-bottom: 1px solid var(--line); }
+</style>
+</head>
+<body>
+
+<!-- custom cursor (bottom chevron of the mark) -->
+<img class="cursor" id="cursor" src="assets/p/cursor1.png" alt="" />
+<div class="grain"></div>
+
+<header class="nav">
+  <a href="index.html" class="nav__brand" data-cursor="hover">POLAR&nbsp;SIAM</a>
+  <nav class="nav__links">
+    <a href="index.html" data-cursor="hover">Man</a>
+    <a href="woman.html" data-cursor="hover">Woman</a>
+    <a href="story.html" data-cursor="hover">Story</a>
+    <a href="careers.html" class="is-active" aria-current="page" data-cursor="hover">We're Hiring</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HIRING INTRO ============ -->
+  <section class="hire">
+    <div>
+      <div class="hire__idx">Join the House</div>
+      <h1>We're<br><em>Hiring</em></h1>
+      <p>Polar Siam is built by a small team who believe every seam carries meaning. We're looking for designers, pattern-cutters, and storytellers. Write to us at <a class="mail" href="mailto:studio@polarsiam.com" data-cursor="hover">studio@polarsiam.com</a>.</p>
+    </div>
+  </section>
+
+  <!-- ============ COLLECTION (scroll-rotate turntables) ============ -->
+  <section class="products" id="collection">
+    <div class="products__head">
+      <h2 class="section-title reveal-up">The Collection</h2>
+      <p class="section-tag reveal-up">What you'd be building — scroll to rotate, 360°</p>
+    </div>
+
+    <!-- 01 — Touchline Jacket (full 360°: 5 real frames + 3 mirrored) -->
+    <article class="product" data-mode="360">
+      <div class="product__viewer">
+        <div class="product__layout">
+          <div class="product__info">
+            <span class="product__idx">01 / 03</span>
+            <h3 class="product__name">Touchline<br><em>Shell</em></h3>
+            <p class="product__desc">Marbled technical jacket for the bench and the staff. Water-shed membrane, articulated sleeve, concealed red piping.</p>
+            <span class="product__for">For — Coaches · Technical Staff</span>
+            <span class="product__price">€ 320</span>
+          </div>
+          <div class="product__stage">
+            <img class="frame" src="assets/p/jk0.png" alt="" />
+            <img class="frame" src="assets/p/jk1.png" alt="" />
+            <img class="frame" src="assets/p/jk2.png" alt="" />
+            <img class="frame" src="assets/p/jk3.png" alt="" />
+            <img class="frame" src="assets/p/jk4.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/jk3.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/jk2.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/jk1.png" alt="" />
+            <span class="product__hint">⟳ scroll · 360°</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 — Travel Suit (full 360°: 5 real frames + 3 mirrored) -->
+    <article class="product product--alt" data-mode="360">
+      <div class="product__viewer">
+        <div class="product__layout">
+          <div class="product__info">
+            <span class="product__idx">02 / 03</span>
+            <h3 class="product__name">Travel<br><em>Suit</em></h3>
+            <p class="product__desc">Crew travelwear in white and cobalt. Tan stand collar, contrast side panel, embroidered crest at the heart.</p>
+            <span class="product__for">For — Players · Squad</span>
+            <span class="product__price">€ 240</span>
+          </div>
+          <div class="product__stage">
+            <img class="frame" src="assets/p/tk0.png" alt="" />
+            <img class="frame" src="assets/p/tk1.png" alt="" />
+            <img class="frame" src="assets/p/tk2.png" alt="" />
+            <img class="frame" src="assets/p/tk3.png" alt="" />
+            <img class="frame" src="assets/p/tk4.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/tk3.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/tk2.png" alt="" />
+            <img class="frame frame--flip" src="assets/p/tk1.png" alt="" />
+            <span class="product__hint">⟳ scroll · 360°</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 — Match Jersey (front/back) -->
+    <article class="product">
+      <div class="product__viewer">
+        <div class="product__layout">
+          <div class="product__info">
+            <span class="product__idx">03 / 03</span>
+            <h3 class="product__name">Match<br><em>Jersey</em></h3>
+            <p class="product__desc">Sleeveless training layer. Sublimated crest, breathable body, cut for movement.</p>
+            <span class="product__for">For — Players · Training</span>
+            <span class="product__price">€ 90</span>
+          </div>
+          <div class="product__stage">
+            <img class="frame" src="assets/p/jr0.png" alt="" />
+            <img class="frame" src="assets/p/jr1.png" alt="" />
+            <span class="product__hint">⟳ scroll</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__wordmark">POLAR SIAM</div>
+    <div class="footer__grid">
+      <div>
+        <span class="footer__label">Reach</span>
+        <a href="mailto:studio@polarsiam.com" data-cursor="hover">studio@polarsiam.com</a>
+      </div>
+      <div>
+        <span class="footer__label">Social</span>
+        <a href="#" data-cursor="hover">Instagram</a>
+        <a href="#" data-cursor="hover">TikTok</a>
+      </div>
+      <div>
+        <span class="footer__label">Legal</span>
+        <a href="#" data-cursor="hover">Terms</a>
+        <a href="#" data-cursor="hover">Privacy</a>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2025 Polar Siam. All rights reserved.</span>
+      <span>Every detail means something.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script type="module" src="js/main.js?v=2"></script>
+</body>
+</html>

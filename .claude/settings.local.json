@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://esm.sh/three@0.160.0\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://esm.sh/lenis@1.1.20\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://esm.sh/animejs@4.0.2\")",
+      "Bash(curl -s \"https://esm.sh/animejs@4.0.2\")",
+      "Bash(curl -s \"https://esm.sh/animejs@4.0.2/es2022/animejs.mjs\")",
+      "Bash(start \"\" \"http://localhost:8123/\")",
+      "Bash(powershell.exe -c \"Start-Process 'http://localhost:8123/'\")",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless=new --disable-gpu --hide-scrollbars --window-size=1440,900 --virtual-time-budget=7000 --screenshot=C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/ps_hero.png http://localhost:8123/)",
+      "Bash(echo \"exit: $?\")",
+      "Bash([ -f \"$SHOT\" ])",
+      "Read(//tmp/**)",
+      "Bash(npm -v)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/diag.mjs http://localhost:8123/ C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/ps_diag.png 6000)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/shot_scroll.mjs http://localhost:8123/ C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/ps_full.png)",
+      "Bash(taskkill //F //IM msedge.exe)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/heroshot.mjs http://localhost:8123/ C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/ps_hero_zoom.png)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/probe2.mjs http://localhost:8123/)",
+      "Bash(convert -version)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/process.mjs)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/sheet.mjs http://localhost:8123/sheet2.html C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/sheet2.png)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/caps.mjs http://localhost:8123/ C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad)",
+      "Bash(node C:/Users/ilyes/AppData/Local/Temp/claude/c--Users-ilyes-Downloads-Polar-Siam/cffc2ce6-070d-4e76-98e4-8ffc8dd585ab/scratchpad/dbg.mjs http://localhost:8123/)",
+      "Bash(rm -f contactsheet.html sheet2.html assets/PUT-IMAGES-HERE.txt)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m 'Polar Siam website — initial commit *)"
+    ]
+  }
+}

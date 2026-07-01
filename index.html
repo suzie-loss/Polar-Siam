@@ -1,0 +1,155 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>POLAR SIAM — Where Cold Meets Heat</title>
+<meta name="description" content="Polar Siam — a dark luxe fashion house. AW25 collection. Where the polar cold meets the Siamese heat." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=4" />
+
+<!-- Module imports: Three.js, Lenis (smooth scroll), anime.js v4 -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.160.0",
+    "lenis": "https://esm.sh/lenis@1.1.20",
+    "animejs": "https://esm.sh/animejs@4.0.2"
+  }
+}
+</script>
+
+<!-- ============ PRELOADER ============ -->
+<div class="loader" id="loader">
+  <div class="loader__inner">
+    <div class="loader__mark">PS</div>
+    <div class="loader__count"><span id="loaderCount">0</span><span class="loader__pct">%</span></div>
+  </div>
+  <div class="loader__bar"><span id="loaderBar"></span></div>
+</div>
+
+<!-- ============ CUSTOM CURSOR (bottom chevron of the mark) ============ -->
+<img class="cursor" id="cursor" src="assets/p/cursor1.png" alt="" />
+
+<!-- ============ PAPER GRAIN ============ -->
+<div class="grain"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__brand" data-cursor="hover">POLAR&nbsp;SIAM</a>
+  <nav class="nav__links">
+    <a href="#top" class="is-active" aria-current="page" data-cursor="hover">Man</a>
+    <a href="woman.html" data-cursor="hover">Woman</a>
+    <a href="story.html" data-cursor="hover">Story</a>
+    <a href="careers.html" data-cursor="hover">We're Hiring</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <!-- colonnade of bars: solid top band, side columns + central shaft of light below -->
+    <div class="hero__bars" aria-hidden="true">
+      <div class="hero__bars-top"></div>
+      <div class="hero__bars-bottom"></div>
+    </div>
+
+    <!-- wordmark climbing both edges (each feather = a member; the mark watches over) -->
+    <div class="hero__rail hero__rail--left" aria-hidden="true">
+      <div class="hero__rail-inner">POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·</div>
+    </div>
+    <div class="hero__rail hero__rail--right" aria-hidden="true">
+      <div class="hero__rail-inner">POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·</div>
+    </div>
+
+    <!-- the brand mark -->
+    <div class="hero__emblem">
+      <img class="emblem" src="assets/p/mark.png" alt="Polar Siam" />
+    </div>
+
+    <!-- scroll cue -->
+    <a href="#hiring" class="hero__scroll" data-cursor="hover" aria-label="Scroll">
+      <svg viewBox="0 0 24 50" width="22" height="46">
+        <line x1="12" y1="2" x2="12" y2="40" />
+        <polyline points="5,32 12,43 19,32" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marquee">
+      <span>POLAR SIAM</span><span class="dot">✦</span>
+      <span>AUTUMN · WINTER 25</span><span class="dot">✦</span>
+      <span>FORGED IN CONTRADICTION</span><span class="dot">✦</span>
+      <span>POLAR SIAM</span><span class="dot">✦</span>
+      <span>AUTUMN · WINTER 25</span><span class="dot">✦</span>
+      <span>FORGED IN CONTRADICTION</span><span class="dot">✦</span>
+    </div>
+  </section>
+
+  <!-- ============ WE'RE HIRING (CTA) ============ -->
+  <section class="join" id="hiring">
+    <h2 class="join__title">
+      <span class="line"><span class="word">We're</span></span>
+      <span class="line"><span class="word italic">Hiring.</span></span>
+    </h2>
+    <p class="join__sub reveal-up">We're building the house of Polar Siam — designers, pattern-cutters, and people who believe every detail means something. If that's you, there's a place on the bench.</p>
+    <a href="careers.html" class="join__cta-btn magnetic" data-cursor="hover"><span>Apply now</span></a>
+  </section>
+
+  <!-- ============ LOOKBOOK (parallax grid) ============ -->
+  <section class="lookbook" id="lookbook">
+    <div class="lookbook__head">
+      <h2 class="section-title reveal-up">Lookbook</h2>
+      <p class="section-tag reveal-up">Shot on location — 72°N</p>
+    </div>
+    <div class="lookbook__grid">
+      <figure class="look look--tall" data-speed="0.06" data-tint="120,140,170"><figcaption>I — North Face</figcaption></figure>
+      <figure class="look" data-speed="-0.04" data-tint="180,150,120"><figcaption>II — Low Sun</figcaption></figure>
+      <figure class="look" data-speed="0.08" data-tint="150,150,160"><figcaption>III — Salt Flat</figcaption></figure>
+      <figure class="look look--tall" data-speed="-0.06" data-tint="160,130,150"><figcaption>IV — Night Market</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="story" id="story">
+    <div class="story__col">
+      <h2 class="section-title reveal-up">The Story</h2>
+    </div>
+    <div class="story__col">
+      <p class="story__lead reveal-up">Polar Siam began as a question: what does a body wear when it lives in two worlds at once?</p>
+      <p class="story__body reveal-up">Cut from technical cold-weather membranes and finished with the drape of tropical tailoring, every piece is built to be worn against itself. We design for the in-between — the airport at 4am, the rooftop at dusk, the cold open and the warm close.</p>
+      <p class="story__body reveal-up">Made in small runs. Numbered. Never restocked.</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__wordmark">POLAR SIAM</div>
+    <div class="footer__grid">
+      <div>
+        <span class="footer__label">Reach</span>
+        <a href="mailto:studio@polarsiam.com" data-cursor="hover">studio@polarsiam.com</a>
+      </div>
+      <div>
+        <span class="footer__label">Social</span>
+        <a href="#" data-cursor="hover">Instagram</a>
+        <a href="#" data-cursor="hover">TikTok</a>
+      </div>
+      <div>
+        <span class="footer__label">Legal</span>
+        <a href="#" data-cursor="hover">Terms</a>
+        <a href="#" data-cursor="hover">Privacy</a>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2025 Polar Siam. All rights reserved.</span>
+      <span>Forged in contradiction.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script type="module" src="js/main.js?v=2"></script>

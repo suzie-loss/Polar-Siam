@@ -1,0 +1,375 @@
+/* ============================================================
+   POLAR SIAM — dark luxe fashion house
+   ============================================================ */
+
+:root {
+  --bg:        #f7f7f4;   /* near-white canvas */
+  --bg-soft:   #efefea;
+  --ink:       #1e211d;   /* deep neutral ink (not pure black) */
+  --ink-dim:   #84897f;   /* muted grey-green */
+  --bar:       #c7cec1;   /* sage bar (from the brand reference) */
+  --bar-rgb:   199, 206, 193; /* bar colour as RGB — pages override for their section */
+  --gold:      #b9a06a;   /* rare ceremonial accent */
+  --gold-soft: #d8c79a;
+  --line:      rgba(30, 33, 29, 0.12);
+
+  --f-serif: "Cormorant Garamond", Georgia, serif;
+  --f-sans:  "Inter", system-ui, sans-serif;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(1.25rem, 5vw, 5rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-weight: 300;
+  line-height: 1.5;
+  overflow-x: clip; /* clip (not hidden) so position:sticky still works */
+  cursor: none;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--gold); color: #000; }
+
+img { max-width: 100%; display: block; }
+
+/* ============ PRELOADER ============ */
+.loader {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2rem;
+}
+.loader__inner { display: flex; align-items: baseline; gap: 1.5rem; }
+.loader__mark {
+  font-family: var(--f-serif); font-size: clamp(4rem, 14vw, 11rem);
+  font-style: italic; line-height: 0.8; color: var(--ink);
+}
+.loader__count {
+  font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0.1em;
+  color: var(--gold); display: flex;
+}
+.loader__pct { opacity: 0.5; }
+.loader__bar {
+  width: min(40vw, 320px); height: 1px; background: var(--line);
+  overflow: hidden;
+}
+.loader__bar span {
+  display: block; height: 100%; width: 0%;
+  background: var(--gold);
+}
+.loader.is-done { pointer-events: none; }
+
+/* ============ CUSTOM CURSOR ============ */
+/* cursor = the bottom chevron of the brand mark (position + scale driven in JS) */
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 900; pointer-events: none;
+  width: 30px; height: auto; display: block; will-change: transform;
+  transform: translate(-50%, -50%);
+}
+/* hide the native pointer/hand over interactive elements so only the chevron shows */
+a, button, input, textarea, select, label, summary, [data-cursor], .magnetic { cursor: none; }
+@media (hover: none) {
+  .cursor { display: none; }
+  body, a, button, input, textarea, select, label, summary, [data-cursor], .magnetic { cursor: auto; }
+}
+
+/* ============ PAPER GRAIN ============ */
+.grain {
+  position: fixed; inset: -50%; z-index: 1; pointer-events: none;
+  opacity: 0.035; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 6s steps(6) infinite;
+}
+@keyframes grain {
+  0%,100%{transform:translate(0,0)} 20%{transform:translate(-8%,4%)}
+  40%{transform:translate(5%,-6%)} 60%{transform:translate(-3%,7%)} 80%{transform:translate(6%,3%)}
+}
+
+/* All content sits above scene */
+main, .nav { position: relative; z-index: 2; }
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed; top: 0; left: 0; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem var(--pad); z-index: 50;
+  color: var(--ink);
+}
+.nav__brand { font-size: 0.95rem; letter-spacing: 0.32em; font-weight: 400; }
+.nav__links { display: flex; gap: 2.4rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.nav__links a {
+  font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+  position: relative; padding-bottom: 3px;
+}
+.nav__links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease);
+}
+.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav__links a.is-active::after { transform: scaleX(1); transform-origin: left; }
+.nav__links a.is-active { color: var(--ink); }
+.nav__cta {
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--ink); border-radius: 100px;
+  padding: 0.6rem 1.2rem; display: inline-block;
+}
+@media (max-width: 760px) { .nav__links { display: none; } }
+
+/* ============ SHARED ============ */
+section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
+.section-title {
+  font-family: var(--f-serif); font-weight: 500;
+  font-size: clamp(2.4rem, 7vw, 5rem); line-height: 0.95;
+}
+.section-tag {
+  font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-dim); margin-top: 1rem;
+}
+
+/* reveal helpers (anime.js drives these) */
+.reveal-up { opacity: 0; transform: translateY(24px); }
+
+/* ============ HERO (the colonnade) ============ */
+.hero {
+  position: relative; height: 100svh; min-height: 600px;
+  overflow: hidden; background: var(--bg);
+}
+
+/* --- bars --- */
+/* period 80px: 60px sage bar + 20px light gap (wide bars, thin gaps) */
+.hero__bars { position: absolute; inset: 0; z-index: 2; } /* bars sit ABOVE the mark */
+.hero__bars-top,
+.hero__bars-bottom {
+  position: absolute; left: 0; right: 0;
+  /* translucent bars so the mark behind them ghosts through */
+  background: repeating-linear-gradient(
+    to right,
+    rgba(var(--bar-rgb), 0.8) 0 60px,
+    transparent 60px 80px
+  );
+  /* phase the pattern so a bar is centred on the mark → symmetric reveal at any width */
+  background-position: calc(50% - 36px) 0;
+}
+.hero__bars-top    { top: 0; height: 26vh; }
+.hero__bars-bottom { top: 26vh; bottom: 0; }
+
+/* --- wordmark rails climbing the edges --- */
+.hero__rail {
+  position: absolute; top: 0; bottom: 0; z-index: 3;
+  display: flex; align-items: center; overflow: hidden; pointer-events: none;
+}
+.hero__rail--left  { left: clamp(0.9rem, 3.2vw, 3.2rem); }
+.hero__rail--right { right: clamp(0.9rem, 3.2vw, 3.2rem); }
+.hero__rail-inner {
+  writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;
+  font-size: 0.72rem; letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--ink); opacity: 0.62; font-weight: 400;
+}
+.hero__rail--right .hero__rail-inner { transform: rotate(0deg); }
+
+/* --- the mark, in the shaft of light (grid-centred so anime can transform it freely) --- */
+.hero__emblem {
+  position: absolute; inset: 0 0 4vh 0; z-index: 1; /* behind the bars */
+  display: grid; place-items: center; pointer-events: none;
+}
+.emblem { width: clamp(84px, 8.5vw, 132px); height: auto; display: block; }
+
+/* --- scroll cue --- */
+.hero__scroll {
+  position: absolute; z-index: 4; left: 50%; bottom: clamp(2rem, 6vh, 4rem);
+  transform: translateX(-50%);
+}
+.hero__scroll svg { stroke: var(--ink); stroke-width: 1.2; fill: none; opacity: 0.55; }
+.hero__scroll svg line, .hero__scroll svg polyline { stroke-linecap: round; stroke-linejoin: round; }
+.hero__scroll svg { animation: scrollPulse 2.2s var(--ease) infinite; }
+@keyframes scrollPulse {
+  0%,100% { transform: translateY(0); opacity: .45; }
+  50%     { transform: translateY(7px); opacity: .9; }
+}
+
+/* ============ MARQUEE ============ */
+.marquee { padding: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
+.marquee__track {
+  display: flex; align-items: center; gap: 2.5rem; white-space: nowrap;
+  padding: 1.4rem 0; will-change: transform;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(1.6rem, 4vw, 3rem); color: var(--ink);
+}
+.marquee__track .dot { color: var(--gold); font-style: normal; }
+
+/* ============ MANIFESTO ============ */
+.manifesto { display: flex; justify-content: center; text-align: center; }
+.manifesto__text {
+  font-family: var(--f-serif); font-weight: 400;
+  font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.15; max-width: 18ch;
+}
+.manifesto__text em { font-style: italic; color: var(--gold-soft); }
+.manifesto__text .ml { display: block; overflow: hidden; }
+.manifesto__text .ml__in { display: inline-block; }
+
+/* ============ COLLECTION (scroll-rotate turntables) ============ */
+.products { padding-top: clamp(4rem, 10vh, 9rem); padding-bottom: 0; }
+.products__head { margin-bottom: 2rem; }
+
+/* each product gets scroll distance; the viewer pins while frames scrub */
+.product { position: relative; min-height: 240vh; }
+.product__viewer {
+  position: sticky; top: 0; height: 100svh;
+  display: grid; place-items: center;
+}
+.product__layout {
+  width: min(1100px, 92vw);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: clamp(1.5rem, 5vw, 5rem);
+}
+.product--alt .product__layout { direction: rtl; }
+.product--alt .product__info,
+.product--alt .product__stage { direction: ltr; }
+
+/* info column */
+.product__info { display: flex; flex-direction: column; align-items: flex-start; }
+.product__idx { font-size: 0.75rem; letter-spacing: 0.22em; color: var(--ink-dim); }
+.product__name {
+  font-family: var(--f-serif); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(2.6rem, 6vw, 5rem); line-height: 0.92; margin: 0.8rem 0 1.4rem;
+}
+.product__name em { font-style: italic; text-transform: none; }
+.product__desc { color: var(--ink-dim); max-width: 36ch; line-height: 1.6; margin-bottom: 1.6rem; }
+.product__for {
+  font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink); padding-bottom: 0.9rem; margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line); width: 100%;
+}
+.product__price { font-family: var(--f-serif); font-size: 1.5rem; }
+
+/* stage / viewer panel — the 3D studio render fills it */
+.product__stage {
+  position: relative; justify-self: center;
+  width: 100%; max-width: 440px; aspect-ratio: 4/5;
+  border-radius: 3px; overflow: hidden;
+  background: linear-gradient(170deg, #d7dbd4, #c2c8bf);
+  box-shadow: 0 30px 70px -40px rgba(30,33,29,0.5);
+}
+.product__stage .frame {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  opacity: 0; transition: opacity .14s linear;
+}
+.product__stage .frame:first-child { opacity: 1; }
+.product__stage .frame--flip { transform: scaleX(-1); } /* mirrored = the other 180° of the spin */
+.product__hint {
+  position: absolute; left: 50%; bottom: 0.9rem; transform: translateX(-50%);
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(30,33,29,0.55); pointer-events: none;
+}
+@media (max-width: 760px) {
+  .product { min-height: 200vh; }
+  .product__layout { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+  .product--alt .product__layout { direction: ltr; }
+  .product__info { align-items: center; }
+  .product__stage { max-width: 78vw; }
+}
+
+/* ============ LOOKBOOK ============ */
+.lookbook__head { margin-bottom: 3.5rem; }
+.lookbook__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 3vw, 3rem); align-items: start;
+}
+.look {
+  position: relative; aspect-ratio: 4/5; border-radius: 2px; overflow: hidden;
+  border: 1px solid var(--line); will-change: transform;
+  background:
+    radial-gradient(130% 100% at 50% 0%, rgba(var(--tint),0.38), transparent 58%),
+    radial-gradient(90% 70% at 50% 100%, rgba(200,168,106,0.08), transparent 60%),
+    linear-gradient(170deg, #16161c, #050506);
+}
+.look--tall { aspect-ratio: 4/6.2; margin-top: clamp(2rem, 8vh, 7rem); }
+.look figcaption {
+  position: absolute; left: 1.2rem; bottom: 1.1rem;
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
+  mix-blend-mode: difference;
+}
+@media (max-width: 760px) { .lookbook__grid { grid-template-columns: 1fr; } .look--tall { margin-top: 0; } }
+
+/* ============ STORY ============ */
+.story { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+.story__lead { font-family: var(--f-serif); font-size: clamp(1.6rem, 3vw, 2.6rem); line-height: 1.2; margin-bottom: 2rem; }
+.story__body { color: var(--ink-dim); max-width: 52ch; margin-bottom: 1.2rem; font-size: 1.05rem; }
+@media (max-width: 760px) { .story { grid-template-columns: 1fr; } }
+
+/* ============ JOIN ============ */
+.join { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.join__title {
+  font-family: var(--f-serif); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(3rem, 12vw, 10rem); line-height: 0.85;
+}
+.join__title .line { display: block; overflow: hidden; }
+.join__title .word { display: inline-block; transform: translateY(110%); }
+.join__title .italic { font-style: italic; text-transform: none; color: var(--gold-soft); }
+.join__sub { color: var(--ink-dim); max-width: 40ch; margin: 2rem 0 2.5rem; }
+.join__form { display: flex; gap: 0.75rem; width: min(100%, 460px); }
+.join__form input {
+  flex: 1; background: transparent; border: 1px solid var(--line);
+  border-radius: 100px; padding: 1rem 1.4rem; color: var(--ink);
+  font-family: var(--f-sans); font-size: 0.95rem; outline: none;
+  transition: border-color .4s;
+}
+.join__form input:focus { border-color: var(--gold); }
+.join__form button {
+  background: var(--gold); color: #000; border: none; cursor: none;
+  border-radius: 100px; padding: 1rem 1.8rem; font-size: 0.85rem;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+}
+.join__note { margin-top: 1.5rem; color: var(--gold); letter-spacing: 0.05em; }
+
+/* Apply-now CTA button */
+.join__cta-btn {
+  display: inline-block; margin-top: 1rem;
+  background: var(--ink); color: var(--bg);
+  border: 1px solid var(--ink); border-radius: 100px;
+  padding: 1rem 2.4rem; font-size: 0.82rem;
+  letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+  transition: background .45s var(--ease), color .45s var(--ease);
+}
+.join__cta-btn:hover { background: transparent; color: var(--ink); }
+
+/* ============ FOOTER ============ */
+.footer { padding-top: clamp(4rem, 10vh, 8rem); border-top: 1px solid var(--line); }
+.footer__wordmark {
+  font-family: var(--f-serif); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(3rem, 16vw, 14rem); line-height: 0.8; letter-spacing: -0.01em;
+  text-align: center; margin-bottom: 4rem;
+}
+.footer__grid { display: flex; flex-wrap: wrap; gap: 3rem 5rem; justify-content: center; margin-bottom: 4rem; }
+.footer__grid > div { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.footer__grid a { color: var(--ink-dim); transition: color .3s; }
+.footer__grid a:hover { color: var(--ink); }
+.footer__base {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  padding-top: 2rem; border-top: 1px solid var(--line);
+  font-size: 0.78rem; color: var(--ink-dim); letter-spacing: 0.04em;
+}
+
+/* magnetic buttons get JS transform; keep transition snappy */
+.magnetic { display: inline-block; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .reveal-up, .hero__title .word, .join__title .word { opacity: 1 !important; transform: none !important; }
+}
