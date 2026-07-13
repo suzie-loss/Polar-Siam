@@ -9,8 +9,10 @@
   --ink-dim:   #84897f;   /* muted grey-green */
   --bar:       #c7cec1;   /* sage bar (from the brand reference) */
   --bar-rgb:   199, 206, 193; /* bar colour as RGB — pages override for their section */
-  --gold:      #b9a06a;   /* rare ceremonial accent */
-  --gold-soft: #d8c79a;
+  --hero-bar-width: clamp(44px, 5.2vw, 60px);
+  --hero-bar-gutter: 20px;
+  --gold:      #4b5975;   /* accent — refined slate blue (was beige/gold) */
+  --gold-soft: #8592af;
   --line:      rgba(30, 33, 29, 0.12);
 
   --f-serif: "Cormorant Garamond", Georgia, serif;
@@ -31,7 +33,7 @@ body {
   font-weight: 300;
   line-height: 1.5;
   overflow-x: clip; /* clip (not hidden) so position:sticky still works */
-  cursor: none;
+  cursor: auto;
 }
 
 /* Lenis */
@@ -71,20 +73,18 @@ img { max-width: 100%; display: block; }
   background: var(--gold);
 }
 .loader.is-done { pointer-events: none; }
+/* assembling-mark preloader */
+.loader__logo { width: clamp(96px, 12vw, 148px); height: auto; overflow: visible; display: block; }
+.loader__logo .arm { will-change: transform, opacity; }
+.loader__logo .arm path { fill: var(--ink); }
 
 /* ============ CUSTOM CURSOR ============ */
 /* cursor = the bottom chevron of the brand mark (position + scale driven in JS) */
 .cursor {
-  position: fixed; top: 0; left: 0; z-index: 900; pointer-events: none;
-  width: 30px; height: auto; display: block; will-change: transform;
-  transform: translate(-50%, -50%);
+  display: none !important;
 }
-/* hide the native pointer/hand over interactive elements so only the chevron shows */
-a, button, input, textarea, select, label, summary, [data-cursor], .magnetic { cursor: none; }
-@media (hover: none) {
-  .cursor { display: none; }
-  body, a, button, input, textarea, select, label, summary, [data-cursor], .magnetic { cursor: auto; }
-}
+a, button, label, summary, [data-cursor], .magnetic { cursor: pointer; }
+input, textarea, select { cursor: auto; }
 
 /* ============ PAPER GRAIN ============ */
 .grain {
@@ -150,7 +150,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 }
 
 /* --- bars --- */
-/* period 80px: 60px sage bar + 20px light gap (wide bars, thin gaps) */
+/* responsive bars: variable width bar + 20px gutter */
 .hero__bars { position: absolute; inset: 0; z-index: 2; } /* bars sit ABOVE the mark */
 .hero__bars-top,
 .hero__bars-bottom {
@@ -158,11 +158,11 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   /* translucent bars so the mark behind them ghosts through */
   background: repeating-linear-gradient(
     to right,
-    rgba(var(--bar-rgb), 0.8) 0 60px,
-    transparent 60px 80px
+    rgba(var(--bar-rgb), 0.44) 0 var(--hero-bar-width),
+    transparent var(--hero-bar-width) calc(var(--hero-bar-width) + var(--hero-bar-gutter))
   );
-  /* phase the pattern so a bar is centred on the mark → symmetric reveal at any width */
-  background-position: calc(50% - 36px) 0;
+  /* keep a single bar centred on the emblem at any viewport width */
+  background-position: calc(50% - (var(--hero-bar-width) / 2)) 0;
 }
 .hero__bars-top    { top: 0; height: 26vh; }
 .hero__bars-bottom { top: 26vh; bottom: 0; }
@@ -175,18 +175,32 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .hero__rail--left  { left: clamp(0.9rem, 3.2vw, 3.2rem); }
 .hero__rail--right { right: clamp(0.9rem, 3.2vw, 3.2rem); }
 .hero__rail-inner {
-  writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;
+  display: flex; flex-direction: column; gap: 1rem;
+  transform: rotate(180deg);
   font-size: 0.72rem; letter-spacing: 0.42em; text-transform: uppercase;
-  color: var(--ink); opacity: 0.62; font-weight: 400;
+  color: var(--ink); font-weight: 400;
 }
+.hero__rail--left .hero__rail-inner { flex-direction: column-reverse; }
 .hero__rail--right .hero__rail-inner { transform: rotate(0deg); }
+.hero__rail-item {
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  opacity: var(--rail-opacity, 1);
+}
 
 /* --- the mark, in the shaft of light (grid-centred so anime can transform it freely) --- */
 .hero__emblem {
   position: absolute; inset: 0 0 4vh 0; z-index: 1; /* behind the bars */
   display: grid; place-items: center; pointer-events: none;
 }
-.emblem { width: clamp(84px, 8.5vw, 132px); height: auto; display: block; }
+.emblem {
+  width: calc(var(--hero-bar-width) + (var(--hero-bar-gutter) * 2));
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.emblem .arm { will-change: transform; }
+.emblem .arm path { fill: var(--ink); }
 
 /* --- scroll cue --- */
 .hero__scroll {
@@ -204,12 +218,35 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 /* ============ MARQUEE ============ */
 .marquee { padding: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; }
 .marquee__track {
-  display: flex; align-items: center; gap: 2.5rem; white-space: nowrap;
-  padding: 1.4rem 0; will-change: transform;
-  font-family: var(--f-serif); font-style: italic;
-  font-size: clamp(1.6rem, 4vw, 3rem); color: var(--ink);
+  overflow: hidden;
+  padding: 1.4rem 0;
 }
-.marquee__track .dot { color: var(--gold); font-style: normal; }
+.marquee__belt {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  will-change: transform;
+  animation: marqueeSlide 24s linear infinite;
+}
+.marquee__group {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  white-space: nowrap;
+  padding-right: 2.5rem;
+  font-family: var(--f-serif); font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 2.2rem); color: var(--ink);
+}
+.marquee__separator {
+  height: clamp(1.8rem, 3vw, 2.6rem);
+  width: auto;
+  flex: 0 0 auto;
+  display: block;
+}
+@keyframes marqueeSlide {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
 
 /* ============ MANIFESTO ============ */
 .manifesto { display: flex; justify-content: center; text-align: center; }
@@ -299,6 +336,11 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
     linear-gradient(170deg, #16161c, #050506);
 }
 .look--tall { aspect-ratio: 4/6.2; margin-top: clamp(2rem, 8vh, 7rem); }
+/* 3D model tiles: light studio panel with a WebGL canvas filling the tile */
+.look--model { background: linear-gradient(180deg, #efefec, #e2e2de); }
+.look--model .model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+.look--model .model-viewer__canvas { display: block; width: 100%; height: 100%; }
+.look--model figcaption { z-index: 2; }
 .look figcaption {
   position: absolute; left: 1.2rem; bottom: 1.1rem;
   font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
@@ -331,7 +373,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 }
 .join__form input:focus { border-color: var(--gold); }
 .join__form button {
-  background: var(--gold); color: #000; border: none; cursor: none;
+  background: var(--gold); color: #000; border: none; cursor: pointer;
   border-radius: 100px; padding: 1rem 1.8rem; font-size: 0.85rem;
   letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
 }

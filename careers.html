@@ -7,33 +7,124 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=4" />
+<link rel="stylesheet" href="css/style.css?v=8" />
 <script type="importmap">
 {
   "imports": {
-    "three": "https://esm.sh/three@0.160.0",
     "lenis": "https://esm.sh/lenis@1.1.20",
     "animejs": "https://esm.sh/animejs@4.0.2"
   }
 }
 </script>
 <style>
-  .hire { min-height: 90svh; display: grid; place-items: center; text-align: center; padding: 9rem 1.5rem 3rem; }
-  .hire__idx { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 1.6rem; }
+  [data-fx] { will-change: transform, opacity; backface-visibility: hidden; }
+
+  /* announcement */
+  .hire { min-height: 92svh; display: grid; place-items: center; text-align: center; padding: 9rem 1.5rem 3rem; }
+  .hire__idx { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6rem; }
   .hire h1 { font-family: var(--f-serif); font-weight: 500; text-transform: uppercase; font-size: clamp(3rem, 12vw, 9rem); line-height: 0.86; }
   .hire h1 em { font-style: italic; text-transform: none; }
-  .hire p { color: var(--ink-dim); max-width: 46ch; margin: 2rem auto 0; line-height: 1.7; }
+  .hire p { color: var(--ink-dim); max-width: 48ch; margin: 2rem auto 0; line-height: 1.7; }
   .hire a.mail { color: var(--ink); border-bottom: 1px solid var(--line); }
+
+  /* roles */
+  .roles { padding: clamp(3rem, 8vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem); }
+  .roles__head { margin-bottom: clamp(3rem, 8vh, 6rem); }
+  .role { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; margin-bottom: clamp(4rem, 12vh, 9rem); }
+  .role--alt .role__text { order: 2; }
+  .role--alt .role__media { order: 1; }
+  .role__num { font-family: var(--f-serif); font-style: italic; color: var(--gold); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+  .role__title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: 0.95; margin: 0.3rem 0 1.3rem; }
+  .role__title em { font-style: italic; }
+  .role__desc { color: var(--ink-dim); max-width: 42ch; line-height: 1.65; margin-bottom: 1.6rem; }
+  .role__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; }
+  .role__tags span { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); padding-bottom: 0.4rem; border-bottom: 1px solid var(--line); }
+  .role__media { position: relative; aspect-ratio: 1/1; width: 100%; max-width: 280px; justify-self: center;
+    border-radius: 3px; overflow: hidden; border: 1px solid var(--line);
+    background: linear-gradient(180deg, #f1f1ee, #e5e5e1); display: grid; place-items: center; }
+  .role__media svg { width: 60%; height: 60%; color: var(--ink); display: block; }
+  @media (max-width: 760px) { .role { grid-template-columns: 1fr; gap: 1.5rem; } .role--alt .role__text, .role--alt .role__media { order: 0; } .role__media { max-width: 236px; } }
+
+  /* ===== scroll-reveal · "Passe-Partout" (clip-path mount, GPU-cheap, settles) ===== */
+  .cw-line { display: block; }
+  html.fx-armed .cw { clip-path: inset(100% 0 0 0); will-change: clip-path, transform; }
+  html.fx-armed .role--alt .role__media.cw { clip-path: inset(0 0 100% 0); } /* mirror the reversed grid */
+  html.fx-armed .apply__submit.cw { clip-path: none; opacity: 0; }           /* opacity only — never fight .magnetic */
+  /* belt-and-braces: force visible & static if the module never boots, or under reduced-motion */
+  html.fx-failsafe .cw, html.fx-failsafe .cw-line { clip-path: none !important; opacity: 1 !important; transform: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .cw, .cw-line { clip-path: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* apply form */
+  .apply { padding: clamp(4rem, 10vh, 8rem) var(--pad) clamp(5rem, 12vh, 10rem); }
+  .apply__wrap { max-width: 720px; margin: 0 auto; }
+  .apply__head { margin-bottom: 2.8rem; }
+  .apply__intro { color: var(--ink-dim); max-width: 48ch; margin-top: 1rem; line-height: 1.65; }
+  .apply__form { display: flex; flex-direction: column; gap: 2.2rem; }
+  .field { display: flex; flex-direction: column; gap: 0.8rem; }
+  .field__label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); }
+  .field__label em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: 0.65; }
+  .apply__form input[type="email"], .apply__form textarea {
+    background: transparent; border: none; border-bottom: 1px solid var(--line);
+    padding: 0.85rem 0; color: var(--ink); font-family: var(--f-sans); font-size: 1.05rem; font-weight: 300; outline: none;
+    transition: border-color .45s var(--ease);
+  }
+  .apply__form input[type="email"]::placeholder, .apply__form textarea::placeholder { color: var(--ink-dim); opacity: 0.6; }
+  .apply__form input[type="email"]:focus, .apply__form textarea:focus { border-color: var(--ink); }
+  .apply__form textarea { resize: vertical; min-height: 96px; line-height: 1.6; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .chip { position: relative; }
+  .chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+  .chip span { display: inline-block; padding: 0.6rem 1.15rem; border: 1px solid var(--line); border-radius: 100px; font-size: 0.82rem; color: var(--ink-dim); transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), transform .2s var(--ease); }
+  .chip:hover span { border-color: var(--ink-dim); color: var(--ink); }
+  .chip input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .chip.is-on span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .chip.is-on span, .chip:active span { transform: translateY(-1px); }
+  .apply__submit { align-self: flex-start; margin-top: 0.3rem; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); border-radius: 100px; padding: 1rem 2.5rem; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; transition: background .45s var(--ease), color .45s var(--ease), opacity .3s; }
+  .apply__submit:hover { background: transparent; color: var(--ink); }
+  .apply__submit[disabled] { opacity: 0.45; }
+  .apply__status { font-size: 0.92rem; min-height: 1.3em; opacity: 0; transform: translateY(6px); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .apply__status.is-info, .apply__status.is-ok, .apply__status.is-err { opacity: 1; transform: none; }
+  .apply__status.is-ok { color: #3f7a52; }
+  .apply__status.is-err { color: #b4453f; }
+  .apply__status.is-info { color: var(--ink-dim); }
+  .apply__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 </style>
+<script>
+/* Arm the scroll-reveal BEFORE first paint so seeded-hidden states never flash.
+   The preloader plays only once per session, so on nav between pages boot() runs
+   post-paint — without this, revealed content would flash visible then snap hidden. */
+(function () {
+  try {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.documentElement.classList.add("fx-armed");
+    // fail-safe: if the JS module never boots (e.g. CDN import fails), reveal everything.
+    window.__fxSafe = setTimeout(function () {
+      document.documentElement.classList.add("fx-failsafe");
+    }, 5000);
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
+
+<!-- ============ PRELOADER ============ -->
+<div class="loader" id="loader">
+  <svg class="loader__logo" viewBox="0 0 174.36 230.24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="arm"><path d="M174,80.59l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,80.59Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174.17,82.2v42.33a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V137.18a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174,168.5l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,168.5Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174.17,169.87V212.2a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V224.85a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+  </svg>
+  <div class="loader__bar"><span id="loaderBar"></span></div>
+</div>
 
 <!-- custom cursor (bottom chevron of the mark) -->
 <img class="cursor" id="cursor" src="assets/p/cursor1.png" alt="" />
 <div class="grain"></div>
 
 <header class="nav">
-  <a href="index.html" class="nav__brand" data-cursor="hover">POLAR&nbsp;SIAM</a>
   <nav class="nav__links">
     <a href="index.html" data-cursor="hover">Man</a>
     <a href="woman.html" data-cursor="hover">Woman</a>
@@ -44,93 +135,135 @@
 
 <main>
 
-  <!-- ============ HIRING INTRO ============ -->
+  <!-- ============ 1 · ANNOUNCEMENT ============ -->
   <section class="hire">
     <div>
-      <div class="hire__idx">Join the House</div>
-      <h1>We're<br><em>Hiring</em></h1>
-      <p>Polar Siam is built by a small team who believe every seam carries meaning. We're looking for designers, pattern-cutters, and storytellers. Write to us at <a class="mail" href="mailto:studio@polarsiam.com" data-cursor="hover">studio@polarsiam.com</a>.</p>
+      <div class="hire__idx cw">Join the House</div>
+      <h1 class="cw">We're<br><em>Hiring</em></h1>
+      <p class="cw">Polar Siam is built by a small team who believe every seam carries meaning. Right now we're looking for three people in particular — and a few more besides.</p>
     </div>
   </section>
 
-  <!-- ============ COLLECTION (scroll-rotate turntables) ============ -->
-  <section class="products" id="collection">
-    <div class="products__head">
-      <h2 class="section-title reveal-up">The Collection</h2>
-      <p class="section-tag reveal-up">What you'd be building — scroll to rotate, 360°</p>
+  <!-- ============ 2 · THE ROLES (text + image) ============ -->
+  <section class="roles" id="roles">
+    <div class="roles__head">
+      <h2 class="section-title cw">Who we're<br>looking for</h2>
+      <p class="section-tag cw">Three roles, open now</p>
     </div>
 
-    <!-- 01 — Touchline Jacket (full 360°: 5 real frames + 3 mirrored) -->
-    <article class="product" data-mode="360">
-      <div class="product__viewer">
-        <div class="product__layout">
-          <div class="product__info">
-            <span class="product__idx">01 / 03</span>
-            <h3 class="product__name">Touchline<br><em>Shell</em></h3>
-            <p class="product__desc">Marbled technical jacket for the bench and the staff. Water-shed membrane, articulated sleeve, concealed red piping.</p>
-            <span class="product__for">For — Coaches · Technical Staff</span>
-            <span class="product__price">€ 320</span>
-          </div>
-          <div class="product__stage">
-            <img class="frame" src="assets/p/jk0.png" alt="" />
-            <img class="frame" src="assets/p/jk1.png" alt="" />
-            <img class="frame" src="assets/p/jk2.png" alt="" />
-            <img class="frame" src="assets/p/jk3.png" alt="" />
-            <img class="frame" src="assets/p/jk4.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/jk3.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/jk2.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/jk1.png" alt="" />
-            <span class="product__hint">⟳ scroll · 360°</span>
-          </div>
-        </div>
+    <article class="role">
+      <div class="role__text">
+        <span class="role__num cw">I</span>
+        <h3 class="role__title cw">Graphic<br><em>Designer</em></h3>
+        <p class="role__desc cw">Shape how the house speaks. You'll own the visual system — the crest, kit graphics, the drops — across web, print and product. Restraint, rhythm, and a belief that every detail means something.</p>
+        <div class="role__tags"><span class="cw">Brand</span><span class="cw">Kit Graphics</span><span class="cw">Typography</span></div>
+      </div>
+      <div class="role__media cw" aria-hidden="true">
+        <!-- pen tool + bezier: the graphic designer's instrument -->
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g vector-effect="non-scaling-stroke">
+            <g stroke="var(--gold)" stroke-width="1" opacity=".28"><line x1="18" y1="30" x2="102" y2="30"/><line x1="18" y1="90" x2="102" y2="90"/><line x1="30" y1="18" x2="30" y2="102"/><line x1="90" y1="18" x2="90" y2="102"/></g>
+            <path d="M22 92 C 40 40, 80 96, 98 32" stroke="currentColor" stroke-width="2.4"/>
+            <g stroke="var(--gold)" stroke-width="1.4"><line x1="22" y1="92" x2="40" y2="40"/><line x1="98" y1="32" x2="80" y2="96"/></g>
+            <circle cx="40" cy="40" r="3.4" fill="var(--gold)" stroke="none"/>
+            <circle cx="80" cy="96" r="3.4" fill="var(--gold)" stroke="none"/>
+            <rect x="17.5" y="87.5" width="9" height="9" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
+            <rect x="93.5" y="27.5" width="9" height="9" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
+            <g transform="translate(60 60) rotate(45)"><path d="M-7 -18 L7 -18 L7 6 L0 16 L-7 6 Z" fill="var(--bg)" stroke="currentColor" stroke-width="2"/><line x1="0" y1="6" x2="0" y2="-4"/><circle cx="0" cy="-9" r="2.4" fill="currentColor" stroke="none"/></g>
+          </g>
+        </svg>
       </div>
     </article>
 
-    <!-- 02 — Travel Suit (full 360°: 5 real frames + 3 mirrored) -->
-    <article class="product product--alt" data-mode="360">
-      <div class="product__viewer">
-        <div class="product__layout">
-          <div class="product__info">
-            <span class="product__idx">02 / 03</span>
-            <h3 class="product__name">Travel<br><em>Suit</em></h3>
-            <p class="product__desc">Crew travelwear in white and cobalt. Tan stand collar, contrast side panel, embroidered crest at the heart.</p>
-            <span class="product__for">For — Players · Squad</span>
-            <span class="product__price">€ 240</span>
-          </div>
-          <div class="product__stage">
-            <img class="frame" src="assets/p/tk0.png" alt="" />
-            <img class="frame" src="assets/p/tk1.png" alt="" />
-            <img class="frame" src="assets/p/tk2.png" alt="" />
-            <img class="frame" src="assets/p/tk3.png" alt="" />
-            <img class="frame" src="assets/p/tk4.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/tk3.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/tk2.png" alt="" />
-            <img class="frame frame--flip" src="assets/p/tk1.png" alt="" />
-            <span class="product__hint">⟳ scroll · 360°</span>
-          </div>
-        </div>
+    <article class="role role--alt">
+      <div class="role__text">
+        <span class="role__num cw">II</span>
+        <h3 class="role__title cw">Video<br><em>Editor</em></h3>
+        <p class="role__desc cw">Cut the films that move the brand — launch teasers, behind-the-bench, campaign edits. You think in motion and pace, and you know when to hold a frame.</p>
+        <div class="role__tags"><span class="cw">Motion</span><span class="cw">Campaign</span><span class="cw">Social</span></div>
+      </div>
+      <div class="role__media cw" aria-hidden="true">
+        <!-- viewport + play + timeline scrubber: the editor's frame -->
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g vector-effect="non-scaling-stroke">
+            <rect x="22" y="26" width="76" height="52" rx="4" stroke="currentColor" stroke-width="2.2"/>
+            <g stroke="var(--gold)" stroke-width="1" opacity=".55"><rect x="26" y="30" width="4" height="5" rx="1"/><rect x="26" y="41" width="4" height="5" rx="1"/><rect x="26" y="52" width="4" height="5" rx="1"/><rect x="26" y="63" width="4" height="5" rx="1"/><rect x="90" y="30" width="4" height="5" rx="1"/><rect x="90" y="41" width="4" height="5" rx="1"/><rect x="90" y="52" width="4" height="5" rx="1"/><rect x="90" y="63" width="4" height="5" rx="1"/></g>
+            <path d="M53 40 L72 52 L53 64 Z" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
+            <line x1="22" y1="96" x2="98" y2="96" stroke="currentColor" stroke-width="2"/>
+            <g stroke="currentColor" stroke-width="1.4" opacity=".55"><line x1="34" y1="92" x2="34" y2="100"/><line x1="46" y1="93" x2="46" y2="99"/><line x1="72" y1="93" x2="72" y2="99"/><line x1="86" y1="92" x2="86" y2="100"/></g>
+            <line x1="60" y1="88" x2="60" y2="104" stroke="var(--gold)" stroke-width="2"/>
+            <circle cx="60" cy="88" r="3.4" fill="var(--gold)" stroke="none"/>
+          </g>
+        </svg>
       </div>
     </article>
 
-    <!-- 03 — Match Jersey (front/back) -->
-    <article class="product">
-      <div class="product__viewer">
-        <div class="product__layout">
-          <div class="product__info">
-            <span class="product__idx">03 / 03</span>
-            <h3 class="product__name">Match<br><em>Jersey</em></h3>
-            <p class="product__desc">Sleeveless training layer. Sublimated crest, breathable body, cut for movement.</p>
-            <span class="product__for">For — Players · Training</span>
-            <span class="product__price">€ 90</span>
-          </div>
-          <div class="product__stage">
-            <img class="frame" src="assets/p/jr0.png" alt="" />
-            <img class="frame" src="assets/p/jr1.png" alt="" />
-            <span class="product__hint">⟳ scroll</span>
-          </div>
-        </div>
+    <article class="role">
+      <div class="role__text">
+        <span class="role__num cw">III</span>
+        <h3 class="role__title cw">Fashion<br><em>Model</em></h3>
+        <p class="role__desc cw">Wear the kit and carry the story — editorial, lookbook and campaign. Represent the house on and off the pitch, for the players, the staff and everyone under the wing.</p>
+        <div class="role__tags"><span class="cw">Editorial</span><span class="cw">Lookbook</span><span class="cw">Campaign</span></div>
+      </div>
+      <div class="role__media cw" aria-hidden="true">
+        <!-- tailor's dress form + winged mark on the chest: the house, worn -->
+        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <g vector-effect="non-scaling-stroke">
+            <circle cx="60" cy="16" r="4.6" stroke="currentColor" stroke-width="2"/>
+            <line x1="60" y1="20.6" x2="60" y2="26"/>
+            <path d="M54 27 C 46 27, 40 30, 39 39 C 38 49, 47 57, 48 67 C 49 75, 44 79, 44 85 C 44 90, 51 91, 60 91 C 69 91, 76 90, 76 85 C 76 79, 71 75, 72 67 C 73 57, 82 49, 81 39 C 80 30, 74 27, 66 27 C 64 23, 56 23, 54 27 Z" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M53 34 C 51 50, 51 68, 53 84 M67 34 C 69 50, 69 68, 67 84" stroke="var(--gold)" stroke-width="1" opacity=".4"/>
+            <line x1="60" y1="91" x2="60" y2="106"/>
+            <path d="M48 108 C 52 104, 68 104, 72 108" stroke="currentColor" stroke-width="2"/>
+            <g transform="translate(60 52)" stroke="none"><circle cx="0" cy="0" r="2.6" fill="var(--gold)"/><path d="M2.6 -1.4 L11 -4.4 L11 1.6 Z" fill="var(--gold)" opacity=".9"/><path d="M-2.6 -1.4 L-11 -4.4 L-11 1.6 Z" fill="var(--gold)" opacity=".5"/></g>
+          </g>
+        </svg>
       </div>
     </article>
+  </section>
+
+  <!-- ============ 3 · APPLY FORM ============ -->
+  <section class="apply" id="apply">
+    <div class="apply__wrap">
+      <div class="apply__head">
+        <h2 class="section-title cw">Apply</h2>
+        <p class="apply__intro cw">No cover letters. Tell us your email, what you do, and a few words — we read every one.</p>
+      </div>
+
+      <form id="applyForm" class="apply__form" novalidate>
+        <label class="field cw">
+          <span class="field__label">Your email</span>
+          <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" data-cursor="hover" />
+        </label>
+
+        <div class="field">
+          <span class="field__label cw">What are you applying for? <em>— select any</em></span>
+          <div class="chips">
+            <label class="chip cw"><input type="checkbox" name="Position" value="Graphic Designer" /><span>Graphic Designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Video Editor" /><span>Video Editor</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Fashion Model" /><span>Fashion Model</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="3D Garment Designer" /><span>3D Garment Designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Pattern Cutter" /><span>Pattern Cutter</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Social Media Manager" /><span>Social Media Manager</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Photographer" /><span>Photographer</span></label>
+          </div>
+        </div>
+
+        <label class="field cw">
+          <span class="field__label">Message</span>
+          <textarea name="message" rows="4" placeholder="A few lines about you — and a link to your work." data-cursor="hover"></textarea>
+        </label>
+
+        <!-- FormSubmit config (delivers to the studio inbox) -->
+        <input type="hidden" name="_subject" value="New application — Polar Siam" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" class="apply__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <button type="submit" class="apply__submit magnetic cw" data-cursor="hover"><span>Send application</span></button>
+        <p class="apply__status" id="applyStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
@@ -160,6 +293,6 @@
 
 </main>
 
-<script type="module" src="js/main.js?v=2"></script>
+<script type="module" src="js/main.js?v=15"></script>
 </body>
 </html>

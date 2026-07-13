@@ -6,16 +6,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=4" />
+<link rel="stylesheet" href="css/style.css?v=10" />
 <style>
-  /* Woman — bars in a muted dusty-rose (references the pink/female wing of the mark) */
-  :root { --bar-rgb: 225, 199, 207; }
+  /* Woman — bars in #FF4B5C */
+  :root { --bar-rgb: 255, 75, 92; }
 </style>
 
 <script type="importmap">
 {
   "imports": {
     "three": "https://esm.sh/three@0.160.0",
+    "three/addons/": "https://esm.sh/three@0.160.0/examples/jsm/",
     "lenis": "https://esm.sh/lenis@1.1.20",
     "animejs": "https://esm.sh/animejs@4.0.2"
   }
@@ -24,10 +25,12 @@
 
 <!-- ============ PRELOADER ============ -->
 <div class="loader" id="loader">
-  <div class="loader__inner">
-    <div class="loader__mark">PS</div>
-    <div class="loader__count"><span id="loaderCount">0</span><span class="loader__pct">%</span></div>
-  </div>
+  <svg class="loader__logo" viewBox="0 0 174.36 230.24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="arm"><path d="M174,80.59l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,80.59Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174.17,82.2v42.33a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V137.18a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174,168.5l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,168.5Z" transform="translate(-86.95 -37.43)"/></g>
+    <g class="arm"><path d="M174.17,169.87V212.2a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V224.85a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+  </svg>
   <div class="loader__bar"><span id="loaderBar"></span></div>
 </div>
 
@@ -39,7 +42,6 @@
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
-  <a href="#top" class="nav__brand" data-cursor="hover">POLAR&nbsp;SIAM</a>
   <nav class="nav__links">
     <a href="index.html" data-cursor="hover">Man</a>
     <a href="#top" class="is-active" aria-current="page" data-cursor="hover">Woman</a>
@@ -60,15 +62,46 @@
 
     <!-- wordmark climbing both edges -->
     <div class="hero__rail hero__rail--left" aria-hidden="true">
-      <div class="hero__rail-inner">POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·</div>
+      <div class="hero__rail-inner">
+        <span class="hero__rail-item" style="--rail-opacity: 0.45;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.50;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.55;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.60;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.65;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.70;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.75;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.80;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.85;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.90;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.95;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 1;">POLAR SIAM</span>
+      </div>
     </div>
     <div class="hero__rail hero__rail--right" aria-hidden="true">
-      <div class="hero__rail-inner">POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·&nbsp;&nbsp;POLAR&nbsp;SIAM&nbsp;&nbsp;·</div>
+      <div class="hero__rail-inner">
+        <span class="hero__rail-item" style="--rail-opacity: 0.45;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.50;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.55;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.60;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.65;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.70;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.75;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.80;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.85;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.90;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 0.95;">POLAR SIAM</span>
+        <span class="hero__rail-item" style="--rail-opacity: 1;">POLAR SIAM</span>
+      </div>
     </div>
 
-    <!-- the brand mark -->
+    <!-- the brand mark (4 pieces — each repels the cursor) -->
     <div class="hero__emblem">
-      <img class="emblem" src="assets/p/mark.png" alt="Polar Siam" />
+      <svg class="emblem" viewBox="0 0 174.36 230.24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Polar Siam">
+        <g class="arm"><path d="M174,80.59l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,80.59Z" transform="translate(-86.95 -37.43)"/></g>
+        <g class="arm"><path d="M174.17,82.2v42.33a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V137.18a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+        <g class="arm"><path d="M174,168.5l0-43.07a2,2,0,0,1,1.78.31q36.67,23.74,84.64,54.87a1.93,1.93,0,0,1,.87,1.6v41.64a.7.7,0,0,1-1.09.59L174,168.5Z" transform="translate(-86.95 -37.43)"/></g>
+        <g class="arm"><path d="M174.17,169.87V212.2a.5.5,0,0,1-.23.42l-86.22,55a.5.5,0,0,1-.77-.42V224.85a.5.5,0,0,1,.23-.42l86.22-55a.5.5,0,0,1,.77.42Z" transform="translate(-86.95 -37.43)"/></g>
+      </svg>
     </div>
 
     <!-- scroll cue -->
@@ -82,13 +115,21 @@
 
   <!-- ============ MARQUEE ============ -->
   <section class="marquee" aria-hidden="true">
-    <div class="marquee__track" id="marquee">
-      <span>POLAR SIAM</span><span class="dot">✦</span>
-      <span>AUTUMN · WINTER 25</span><span class="dot">✦</span>
-      <span>FORGED IN CONTRADICTION</span><span class="dot">✦</span>
-      <span>POLAR SIAM</span><span class="dot">✦</span>
-      <span>AUTUMN · WINTER 25</span><span class="dot">✦</span>
-      <span>FORGED IN CONTRADICTION</span><span class="dot">✦</span>
+    <div class="marquee__track">
+      <div class="marquee__belt">
+        <div class="marquee__group">
+          <span>POLAR SIAM NEEDS A TEAM</span>
+          <img class="marquee__separator" src="assets/stroke%20logo.svg" alt="" aria-hidden="true" />
+          <span>POLAR SIAM NEEDS A DESIGNER</span>
+          <img class="marquee__separator" src="assets/stroke%20logo.svg" alt="" aria-hidden="true" />
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span>POLAR SIAM NEEDS A TEAM</span>
+          <img class="marquee__separator" src="assets/stroke%20logo.svg" alt="" aria-hidden="true" />
+          <span>POLAR SIAM NEEDS A DESIGNER</span>
+          <img class="marquee__separator" src="assets/stroke%20logo.svg" alt="" aria-hidden="true" />
+        </div>
+      </div>
     </div>
   </section>
 
@@ -109,8 +150,14 @@
       <p class="section-tag reveal-up">Shot on location — 72°N</p>
     </div>
     <div class="lookbook__grid">
-      <figure class="look look--tall" data-speed="0.06" data-tint="190,150,165"><figcaption>I — North Face</figcaption></figure>
-      <figure class="look" data-speed="-0.04" data-tint="200,160,170"><figcaption>II — Low Sun</figcaption></figure>
+      <figure class="look look--tall look--model">
+        <div class="model-viewer" data-src="assets/ee.glb" data-cursor="hover"></div>
+        <figcaption>I — Drag to rotate ↔</figcaption>
+      </figure>
+      <figure class="look look--model">
+        <div class="model-viewer" data-src="assets/woman2.glb" data-cursor="hover"></div>
+        <figcaption>II — Drag to rotate ↔</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -153,4 +200,5 @@
 
 </main>
 
-<script type="module" src="js/main.js?v=2"></script>
+<script type="module" src="js/main.js?v=15"></script>
+<script type="module" src="js/model-viewer.js?v=3"></script>
