@@ -220,15 +220,13 @@ function marqueeLoop() {
 // ---------------------------------------------------------------
 function playHero() {
   if (reduce || !document.querySelector(".hero__bars")) return; // only on the colonnade hero
-  // bars wipe down from the top band
+  // bars fade in without scaling to avoid a horizontal split seam during load
   animate(".hero__bars-top", {
-    opacity: [0, 1], scaleY: [0.92, 1],
-    transformOrigin: ["50% 0%", "50% 0%"],
+    opacity: [0, 1],
     duration: 1500, ease: "out(3)",
   });
   animate(".hero__bars-bottom", {
-    opacity: [0, 1], scaleY: [0.92, 1],
-    transformOrigin: ["50% 100%", "50% 100%"],
+    opacity: [0, 1],
     duration: 1500, delay: 120, ease: "out(3)",
   });
   // the mark rises into the shaft of light
