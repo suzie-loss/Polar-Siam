@@ -127,7 +127,24 @@ main, .nav { position: relative; z-index: 2; }
   border: 1px solid var(--ink); border-radius: 100px;
   padding: 0.6rem 1.2rem; display: inline-block;
 }
-@media (max-width: 760px) { .nav__links { display: none; } }
+@media (max-width: 760px) {
+  .nav {
+    justify-content: center;
+    padding: 1rem var(--pad);
+  }
+  .nav__links {
+    display: flex;
+    position: static;
+    transform: none;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nav__links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+}
 
 /* ============ SHARED ============ */
 section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
