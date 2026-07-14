@@ -171,13 +171,11 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .hero__bars { position: absolute; inset: 0; z-index: 2; } /* bars sit ABOVE the mark */
 .hero__bars-top,
 .hero__bars-bottom {
-  position: absolute; left: 0; right: 0;
-  background: linear-gradient(
-    to right,
-    transparent calc(50% - (var(--hero-bar-width) / 2)),
-    rgba(var(--bar-rgb), 0.44) calc(50% - (var(--hero-bar-width) / 2)) calc(50% + (var(--hero-bar-width) / 2)),
-    transparent calc(50% + (var(--hero-bar-width) / 2))
-  );
+  position: absolute;
+  left: 50%;
+  width: var(--hero-bar-width);
+  transform: translateX(-50%);
+  background: rgba(var(--bar-rgb), 0.44);
 }
 .hero__bars-top    { top: 0; height: 26vh; }
 .hero__bars-bottom { top: 26vh; bottom: 0; }
