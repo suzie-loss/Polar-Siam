@@ -190,6 +190,25 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   transform: translateX(-50%);
   background: rgba(var(--bar-rgb), 0.44);
 }
+.hero__bars-top::before,
+.hero__bars-top::after,
+.hero__bars-bottom::before,
+.hero__bars-bottom::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--hero-bar-width);
+  background: rgba(var(--bar-rgb), 0.44);
+}
+.hero__bars-top::before,
+.hero__bars-bottom::before {
+  left: calc(50% - ((var(--hero-bar-width) + (var(--hero-bar-gutter) * 2)) / 2) - var(--hero-bar-width));
+}
+.hero__bars-top::after,
+.hero__bars-bottom::after {
+  left: calc(50% + ((var(--hero-bar-width) + (var(--hero-bar-gutter) * 2)) / 2));
+}
 .hero__bars-top    { top: 0; height: 26vh; }
 .hero__bars-bottom { top: 26vh; bottom: 0; }
 
