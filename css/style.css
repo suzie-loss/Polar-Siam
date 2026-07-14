@@ -227,7 +227,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   display: flex; align-items: center; overflow: hidden; pointer-events: none;
 }
 .hero__rail--left  {
-  left: calc(var(--hero-bar-width) + (var(--hero-bar-gutter) / 2));
+  left: calc(50% - (2.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
   transform: translateX(-50%);
 }
 .hero__rail--right {
