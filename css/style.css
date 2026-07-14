@@ -268,6 +268,88 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
     right: calc(50% - (9.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
   }
 }
+
+@media (min-width: 1400px) {
+  .hero__bars-top::before,
+  .hero__bars-bottom::before {
+    box-shadow:
+      calc(-1 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-10 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-11 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+  }
+  .hero__bars-top::after,
+  .hero__bars-bottom::after {
+    box-shadow:
+      calc(var(--hero-bar-width) + var(--hero-bar-gutter)) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(10 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(11 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+  }
+  .hero__rail--left {
+    left: calc(50% - (11.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+  .hero__rail--right {
+    right: calc(50% - (11.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+}
+
+@media (min-width: 1800px) {
+  .hero__bars-top::before,
+  .hero__bars-bottom::before {
+    box-shadow:
+      calc(-1 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-10 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-11 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-12 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-13 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+  }
+  .hero__bars-top::after,
+  .hero__bars-bottom::after {
+    box-shadow:
+      calc(var(--hero-bar-width) + var(--hero-bar-gutter)) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(10 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(11 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(12 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(13 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+  }
+  .hero__rail--left {
+    left: calc(50% - (13.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+  .hero__rail--right {
+    right: calc(50% - (13.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+}
 .hero__rail-inner {
   display: flex; flex-direction: column; gap: 1rem;
   transform: rotate(180deg);
