@@ -241,6 +241,44 @@ function playHero() {
   animate(".hero__scroll", { opacity: [0, 1], duration: 1000, delay: 1050, ease: "out(2)" });
 }
 
+// keep rails between the two outermost visible bars at any viewport width
+function updateHeroRailPosition() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+
+  const leftRail = hero.querySelector(".hero__rail--left");
+  const rightRail = hero.querySelector(".hero__rail--right");
+  if (!leftRail && !rightRail) return;
+
+  const rootStyles = getComputedStyle(document.documentElement);
+  const barW = parseFloat(rootStyles.getPropertyValue("--hero-bar-width"));
+  const gutter = parseFloat(rootStyles.getPropertyValue("--hero-bar-gutter"));
+  if (!Number.isFinite(barW) || !Number.isFinite(gutter)) return;
+
+  const step = barW + gutter;
+  const heroWidth = hero.clientWidth || window.innerWidth;
+  const half = heroWidth / 2;
+
+  // Mirror CSS bar-count tiers so rail math matches rendered bars.
+  const vw = window.innerWidth;
+  const sideBarsConfigured = vw >= 1800 ? 14 : vw >= 1400 ? 12 : vw >= 761 ? 10 : 3;
+  const visibleSideBars = Math.max(1, Math.min(sideBarsConfigured, Math.floor((heroWidth + barW) / (2 * step))));
+  const factor = visibleSideBars - 0.5;
+
+  const inset = Math.max(0, half - (factor * step));
+
+  if (leftRail) {
+    leftRail.style.left = `${inset}px`;
+    leftRail.style.right = "auto";
+    leftRail.style.transform = "translateX(-50%)";
+  }
+  if (rightRail) {
+    rightRail.style.right = `${inset}px`;
+    rightRail.style.left = "auto";
+    rightRail.style.transform = "translateX(50%)";
+  }
+}
+
 // hero mark: each of the 4 pieces repels away from the cursor, then eases back
 function initHeroMark() {
   const svg = document.querySelector(".hero .emblem");
@@ -637,6 +675,18 @@ function boot() {
   initAssemble();
   marqueeLoop();
   playHero();
+  updateHeroRailPosition();
+
+  let railRaf = 0;
+  const queueRailUpdate = () => {
+    if (railRaf) return;
+    railRaf = requestAnimationFrame(() => {
+      railRaf = 0;
+      updateHeroRailPosition();
+    });
+  };
+  window.addEventListener("resize", queueRailUpdate, { passive: true });
+  window.addEventListener("orientationchange", queueRailUpdate, { passive: true });
 }
 
 runLoader(boot);
