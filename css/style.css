@@ -9,7 +9,7 @@
   --ink-dim:   #84897f;   /* muted grey-green */
   --bar:       #c7cec1;   /* sage bar (from the brand reference) */
   --bar-rgb:   199, 206, 193; /* bar colour as RGB — pages override for their section */
-  --hero-bar-width: clamp(42px, 5.2vw, 58px);
+  --hero-bar-width: clamp(41px, 5.2vw, 57px);
   --hero-bar-gutter: 20px;
   --gold:      #4b5975;   /* accent — refined slate blue (was beige/gold) */
   --gold-soft: #8592af;
