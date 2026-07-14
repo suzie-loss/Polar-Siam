@@ -104,12 +104,12 @@ main, .nav { position: relative; z-index: 2; }
 /* ============ NAV ============ */
 .nav {
   position: fixed; top: 0; left: 0; width: 100%;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
   padding: 1.5rem var(--pad); z-index: 50;
   color: var(--ink);
 }
 .nav__brand { font-size: 0.95rem; letter-spacing: 0.32em; font-weight: 400; }
-.nav__links { display: flex; gap: 2.4rem; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.nav__links { display: flex; gap: 2.4rem; position: static; transform: none; }
 .nav__links a {
   font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
   position: relative; padding-bottom: 3px;
@@ -167,19 +167,17 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 }
 
 /* --- bars --- */
-/* responsive bars: variable width bar + 20px gutter */
+/* single centered bar */
 .hero__bars { position: absolute; inset: 0; z-index: 2; } /* bars sit ABOVE the mark */
 .hero__bars-top,
 .hero__bars-bottom {
   position: absolute; left: 0; right: 0;
-  /* translucent bars so the mark behind them ghosts through */
-  background: repeating-linear-gradient(
+  background: linear-gradient(
     to right,
-    rgba(var(--bar-rgb), 0.44) 0 var(--hero-bar-width),
-    transparent var(--hero-bar-width) calc(var(--hero-bar-width) + var(--hero-bar-gutter))
+    transparent calc(50% - (var(--hero-bar-width) / 2)),
+    rgba(var(--bar-rgb), 0.44) calc(50% - (var(--hero-bar-width) / 2)) calc(50% + (var(--hero-bar-width) / 2)),
+    transparent calc(50% + (var(--hero-bar-width) / 2))
   );
-  /* keep a single bar centred on the emblem at any viewport width */
-  background-position: calc(50% - (var(--hero-bar-width) / 2)) 0;
 }
 .hero__bars-top    { top: 0; height: 26vh; }
 .hero__bars-bottom { top: 26vh; bottom: 0; }
