@@ -109,7 +109,20 @@ main, .nav { position: relative; z-index: 2; }
   color: var(--ink);
 }
 .nav__brand { font-size: 0.95rem; letter-spacing: 0.32em; font-weight: 400; }
-.nav__links { display: flex; gap: 2.4rem; position: static; transform: none; }
+.nav__links {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+  align-items: center;
+  column-gap: 1.2rem;
+  width: min(560px, calc(100% - (var(--pad) * 2)));
+}
+.nav__links a:nth-child(1) { justify-self: end; }
+.nav__links a:nth-child(2) { justify-self: center; }
+.nav__links a:nth-child(3) { justify-self: start; }
 .nav__links a {
   font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
   position: relative; padding-bottom: 3px;
