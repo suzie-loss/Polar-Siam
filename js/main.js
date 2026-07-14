@@ -263,7 +263,7 @@ function updateHeroRailPosition() {
   const vw = window.innerWidth;
   const sideBarsConfigured = vw >= 1800 ? 14 : vw >= 1400 ? 12 : vw >= 761 ? 10 : 3;
   const visibleSideBars = Math.max(1, Math.min(sideBarsConfigured, Math.floor((heroWidth + barW) / (2 * step))));
-  const factor = visibleSideBars - 0.5;
+  const factor = visibleSideBars + 0.5;
 
   const inset = Math.max(0, half - (factor * step));
 
