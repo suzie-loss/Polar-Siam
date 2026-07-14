@@ -245,7 +245,8 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
       calc(-5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(-6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(-7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
-      calc(-8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+      calc(-8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
   }
   .hero__bars-top::after,
   .hero__bars-bottom::after {
@@ -257,13 +258,14 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
       calc(5 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(6 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(7 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
-      calc(8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+      calc(8 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(9 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
   }
   .hero__rail--left {
-    left: calc(50% - (7.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    left: calc(50% - (8.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
   }
   .hero__rail--right {
-    right: calc(50% - (7.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    right: calc(50% - (8.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
   }
 }
 .hero__rail-inner {
