@@ -240,14 +240,16 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
     box-shadow:
       calc(-1 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(-2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
-      calc(-3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+      calc(-3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(-4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
   }
   .hero__bars-top::after,
   .hero__bars-bottom::after {
     box-shadow:
       calc(var(--hero-bar-width) + var(--hero-bar-gutter)) 0 0 0 rgba(var(--bar-rgb), 0.44),
       calc(2 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
-      calc(3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
+      calc(3 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44),
+      calc(4 * (var(--hero-bar-width) + var(--hero-bar-gutter))) 0 0 0 rgba(var(--bar-rgb), 0.44);
   }
   .hero__rail--left {
     left: calc(50% - (3.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
