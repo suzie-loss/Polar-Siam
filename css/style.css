@@ -11,7 +11,6 @@
   --bar-rgb:   199, 206, 193; /* bar colour as RGB — pages override for their section */
   --hero-bar-width: clamp(41px, 5.2vw, 57px);
   --hero-bar-gutter: 20px;
-  --hero-bar-step: calc(var(--hero-bar-width) + var(--hero-bar-gutter));
   --gold:      #4b5975;   /* accent — refined slate blue (was beige/gold) */
   --gold-soft: #8592af;
   --line:      rgba(30, 33, 29, 0.12);
@@ -147,12 +146,15 @@ main, .nav { position: relative; z-index: 2; }
     padding: 1rem var(--pad);
   }
   .nav__links {
-    display: flex;
-    position: static;
-    transform: none;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+    align-items: center;
+    column-gap: 0.9rem;
+    width: min(520px, calc(100% - (var(--pad) * 2)));
   }
   .nav__links a {
     font-size: 0.72rem;
@@ -186,13 +188,10 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .hero__bars-top,
 .hero__bars-bottom {
   position: absolute;
-  left: 0;
-  right: 0;
-  background: repeating-linear-gradient(
-    to right,
-    rgba(var(--bar-rgb), 0.44) 0 var(--hero-bar-width),
-    transparent var(--hero-bar-width) var(--hero-bar-step)
-  );
+  left: 50%;
+  width: var(--hero-bar-width);
+  transform: translateX(-50%);
+  background: rgba(var(--bar-rgb), 0.44);
 }
 .hero__bars-top    { top: 0; height: 26vh; }
 .hero__bars-bottom { top: 26vh; bottom: 0; }
