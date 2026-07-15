@@ -160,6 +160,8 @@ function updateFx() {
 const assembleSvg = document.querySelector(".assemble");
 let assembleArms = [], assembleGrey = null, assembleSection = null;
 const A_CENTER = { x: 87.18, y: 115.12 }; // viewBox 174.36 x 230.24, centre
+const joinTitle = document.querySelector(".join__title");
+const joinWords = [...document.querySelectorAll(".join__title .word")];
 function initAssemble() {
   if (!assembleSvg) return;
   assembleSection = assembleSvg.closest("section") || assembleSvg.parentElement;
@@ -189,10 +191,25 @@ function updateAssemble() {
   if (assembleGrey) assembleGrey.style.opacity = Math.max(0, Math.min(1, (p - 0.72) / 0.28)).toFixed(3);
 }
 
+function updateJoinTitleProgress() {
+  if (!joinTitle || !joinWords.length || reduce) return;
+  const rect = joinTitle.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const total = rect.height + vh * 0.45;
+  const p = Math.max(0, Math.min(1, (vh - rect.top) / total));
+  const seg = 1 / joinWords.length;
+
+  joinWords.forEach((w, i) => {
+    const lp = Math.max(0, Math.min(1, (p - i * seg) / seg));
+    w.style.opacity = (0.22 + lp * 0.78).toFixed(3);
+  });
+}
+
 function updateScrollDriven(scroll, velocity = 0) {
   updateTurntables();
   updateFx();
   updateAssemble();
+  updateJoinTitleProgress();
 
   // capture scroll speed and let marquee consume it with a clear acceleration boost
   marqueeBoost = Math.max(marqueeBoost, Math.min(8, Math.abs(velocity) * 2.6));
@@ -325,18 +342,6 @@ function initReveals() {
     if (manifestoEl) mio.observe(manifestoEl);
   }
 
-  // join title words
-  const joinIo = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      animate(".join__title .word", {
-        translateY: ["110%", "0%"], duration: 1200, delay: stagger(120), ease: "out(4)",
-      });
-      obs.unobserve(entry.target);
-    });
-  }, { threshold: 0.4 });
-  const join = document.querySelector(".join");
-  if (join) joinIo.observe(join);
 }
 
 // ---------------------------------------------------------------

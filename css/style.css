@@ -537,7 +537,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   font-size: clamp(2.2rem, 7.2vw, 5.8rem); line-height: 0.95;
 }
 .join__title .line { display: block; overflow: hidden; }
-.join__title .word { display: inline-block; transform: translateY(110%); }
+.join__title .word { display: inline-block; transform: none; opacity: 0.22; }
 .join__title .italic { font-style: italic; text-transform: none; color: var(--bar); }
 .join__sub {
   color: var(--ink);
