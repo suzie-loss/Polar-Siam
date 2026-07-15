@@ -99,7 +99,7 @@ function initScroll() {
 // 3. SCROLL-DRIVEN: horizontal collection + lookbook parallax + marquee
 // ---------------------------------------------------------------
 const looks = [...document.querySelectorAll(".look")];
-const marquee = document.getElementById("marquee");
+const marquee = document.querySelector(".marquee__belt");
 let marqueeX = 0;
 let marqueeBoost = 0;
 
@@ -194,8 +194,8 @@ function updateScrollDriven(scroll, velocity = 0) {
   updateFx();
   updateAssemble();
 
-  // capture scroll speed and let marquee consume it with gentle decay
-  marqueeBoost = Math.max(marqueeBoost, Math.min(10, Math.abs(velocity) * 1.6));
+  // capture scroll speed and let marquee consume it with a clear acceleration boost
+  marqueeBoost = Math.max(marqueeBoost, Math.min(35, Math.abs(velocity) * 12));
 
   // ---- lookbook parallax ----
   looks.forEach((el) => {
@@ -209,11 +209,13 @@ function updateScrollDriven(scroll, velocity = 0) {
 // keep marquee alive even when idle
 function marqueeLoop() {
   if (!reduce) {
+    // disable CSS keyframes so JS can fully control scroll-reactive speed
+    if (marquee && marquee.style.animation !== "none") marquee.style.animation = "none";
     updateScrollDriven(lenis ? lenis.scroll : window.scrollY, 0);
     if (marquee) {
-      marqueeX -= 0.6 + marqueeBoost;
-      marqueeBoost *= 0.9;
-      if (marqueeBoost < 0.02) marqueeBoost = 0;
+      marqueeX -= 1 + marqueeBoost;
+      marqueeBoost *= 0.94;
+      if (marqueeBoost < 0.05) marqueeBoost = 0;
       const half = marquee.scrollWidth / 2;
       if (-marqueeX >= half) marqueeX += half;
       marquee.style.transform = `translate3d(${marqueeX}px,0,0)`;
