@@ -195,7 +195,7 @@ function updateScrollDriven(scroll, velocity = 0) {
   updateAssemble();
 
   // capture scroll speed and let marquee consume it with a clear acceleration boost
-  marqueeBoost = Math.max(marqueeBoost, Math.min(14, Math.abs(velocity) * 5));
+  marqueeBoost = Math.max(marqueeBoost, Math.min(8, Math.abs(velocity) * 2.6));
 
   // ---- lookbook parallax ----
   looks.forEach((el) => {
@@ -213,8 +213,8 @@ function marqueeLoop() {
     if (marquee && marquee.style.animation !== "none") marquee.style.animation = "none";
     updateScrollDriven(lenis ? lenis.scroll : window.scrollY, 0);
     if (marquee) {
-      marqueeX -= 0.8 + marqueeBoost;
-      marqueeBoost *= 0.9;
+      marqueeX -= 0.7 + marqueeBoost;
+      marqueeBoost *= 0.86;
       if (marqueeBoost < 0.05) marqueeBoost = 0;
       const half = marquee.scrollWidth / 2;
       if (-marqueeX >= half) marqueeX += half;
