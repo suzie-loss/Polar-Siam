@@ -101,6 +101,7 @@ function initScroll() {
 const looks = [...document.querySelectorAll(".look")];
 const marquee = document.getElementById("marquee");
 let marqueeX = 0;
+let marqueeBoost = 0;
 
 // product turntables: each product scrubs through its frames as it scrolls past
 const products = [...document.querySelectorAll(".product")].map((el) => ({
@@ -193,6 +194,9 @@ function updateScrollDriven(scroll, velocity = 0) {
   updateFx();
   updateAssemble();
 
+  // capture scroll speed and let marquee consume it with gentle decay
+  marqueeBoost = Math.max(marqueeBoost, Math.min(10, Math.abs(velocity) * 1.6));
+
   // ---- lookbook parallax ----
   looks.forEach((el) => {
     const speed = parseFloat(el.dataset.speed || "0");
@@ -201,17 +205,20 @@ function updateScrollDriven(scroll, velocity = 0) {
     el.style.transform = `translate3d(0, ${center * speed}px, 0)`;
   });
 
-  // ---- marquee drifts with scroll velocity ----
-  if (marquee) {
-    marqueeX -= 0.6 + Math.abs(velocity) * 0.4;
-    const half = marquee.scrollWidth / 2;
-    if (-marqueeX >= half) marqueeX += half;
-    marquee.style.transform = `translate3d(${marqueeX}px,0,0)`;
-  }
 }
 // keep marquee alive even when idle
 function marqueeLoop() {
-  if (!reduce) updateScrollDriven(lenis ? lenis.scroll : window.scrollY, 0);
+  if (!reduce) {
+    updateScrollDriven(lenis ? lenis.scroll : window.scrollY, 0);
+    if (marquee) {
+      marqueeX -= 0.6 + marqueeBoost;
+      marqueeBoost *= 0.9;
+      if (marqueeBoost < 0.02) marqueeBoost = 0;
+      const half = marquee.scrollWidth / 2;
+      if (-marqueeX >= half) marqueeX += half;
+      marquee.style.transform = `translate3d(${marqueeX}px,0,0)`;
+    }
+  }
   requestAnimationFrame(marqueeLoop);
 }
 
