@@ -221,7 +221,7 @@ function updateJoinTitleProgress() {
 
   joinRevealEls.forEach((w, i) => {
     const lp = Math.max(0, Math.min(1, (p - i * seg) / seg));
-    const base = i === 0 ? joinStartOpacity : 0;
+    const base = i < joinWords.length ? joinStartOpacity : 0;
     w.style.opacity = (base + lp * (1 - base)).toFixed(3);
   });
 }
