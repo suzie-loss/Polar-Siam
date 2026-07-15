@@ -160,6 +160,7 @@ function updateFx() {
 const assembleSvg = document.querySelector(".assemble");
 let assembleArms = [], assembleGrey = null, assembleSection = null;
 const A_CENTER = { x: 87.18, y: 115.12 }; // viewBox 174.36 x 230.24, centre
+const joinSection = document.querySelector(".join");
 const joinTitle = document.querySelector(".join__title");
 const joinWords = [...document.querySelectorAll(".join__title .word")];
 function initAssemble() {
@@ -192,11 +193,10 @@ function updateAssemble() {
 }
 
 function updateJoinTitleProgress() {
-  if (!joinTitle || !joinWords.length || reduce) return;
-  const rect = joinTitle.getBoundingClientRect();
-  const vh = window.innerHeight;
-  const total = rect.height + vh * 0.45;
-  const p = Math.max(0, Math.min(1, (vh - rect.top) / total));
+  if (!joinSection || !joinTitle || !joinWords.length || reduce) return;
+  const rect = joinSection.getBoundingClientRect();
+  const total = Math.max(1, joinSection.offsetHeight - window.innerHeight);
+  const p = Math.max(0, Math.min(1, (-rect.top) / total));
   const seg = 1 / joinWords.length;
 
   joinWords.forEach((w, i) => {
