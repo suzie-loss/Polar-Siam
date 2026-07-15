@@ -163,6 +163,16 @@ const A_CENTER = { x: 87.18, y: 115.12 }; // viewBox 174.36 x 230.24, centre
 const joinSection = document.querySelector(".join");
 const joinTitle = document.querySelector(".join__title");
 const joinWords = [...document.querySelectorAll(".join__title .word")];
+const joinReadingSpeed = (() => {
+  if (!joinSection) return 1.5;
+  const v = parseFloat(joinSection.dataset.readingSpeed || "1.5");
+  return Number.isFinite(v) && v > 0 ? v : 1.5;
+})();
+const joinStartOpacity = (() => {
+  if (!joinSection) return 0.22;
+  const v = parseFloat(joinSection.dataset.textStartOpacity || "0.22");
+  return Number.isFinite(v) ? Math.max(0, Math.min(0.9, v)) : 0.22;
+})();
 function initAssemble() {
   if (!assembleSvg) return;
   assembleSection = assembleSvg.closest("section") || assembleSvg.parentElement;
@@ -193,15 +203,23 @@ function updateAssemble() {
 }
 
 function updateJoinTitleProgress() {
-  if (!joinSection || !joinTitle || !joinWords.length || reduce) return;
+  if (!joinSection || !joinTitle || !joinWords.length) return;
+  if (reduce) {
+    joinWords.forEach((w) => { w.style.opacity = "1"; });
+    return;
+  }
+
+  joinSection.style.setProperty("--join-start-opacity", joinStartOpacity.toString());
   const rect = joinSection.getBoundingClientRect();
   const total = Math.max(1, joinSection.offsetHeight - window.innerHeight);
-  const p = Math.max(0, Math.min(1, (-rect.top) / total));
+  const pRaw = Math.max(0, Math.min(1, (-rect.top) / total));
+  // Shopify-like behavior: lower reading-speed value reveals faster.
+  const p = Math.max(0, Math.min(1, pRaw / joinReadingSpeed));
   const seg = 1 / joinWords.length;
 
   joinWords.forEach((w, i) => {
     const lp = Math.max(0, Math.min(1, (p - i * seg) / seg));
-    w.style.opacity = (0.22 + lp * 0.78).toFixed(3);
+    w.style.opacity = (joinStartOpacity + lp * (1 - joinStartOpacity)).toFixed(3);
   });
 }
 
