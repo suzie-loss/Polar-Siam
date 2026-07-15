@@ -533,7 +533,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 /* ============ JOIN ============ */
 .join {
   position: relative;
-  min-height: 220svh;
+  min-height: 260svh;
   padding: 0;
   --join-start-opacity: 0.22;
 }
