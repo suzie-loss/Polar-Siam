@@ -163,6 +163,8 @@ const A_CENTER = { x: 87.18, y: 115.12 }; // viewBox 174.36 x 230.24, centre
 const joinSection = document.querySelector(".join");
 const joinTitle = document.querySelector(".join__title");
 const joinWords = [...document.querySelectorAll(".join__title .word")];
+const joinButton = document.querySelector(".join__cta-btn");
+const joinRevealEls = joinButton ? [...joinWords, joinButton] : [...joinWords];
 const joinReadingSpeed = (() => {
   if (!joinSection) return 1.5;
   const v = parseFloat(joinSection.dataset.readingSpeed || "1.5");
@@ -203,9 +205,9 @@ function updateAssemble() {
 }
 
 function updateJoinTitleProgress() {
-  if (!joinSection || !joinTitle || !joinWords.length) return;
+  if (!joinSection || !joinTitle || !joinRevealEls.length) return;
   if (reduce) {
-    joinWords.forEach((w) => { w.style.opacity = "1"; });
+    joinRevealEls.forEach((el) => { el.style.opacity = "1"; });
     return;
   }
 
@@ -213,11 +215,11 @@ function updateJoinTitleProgress() {
   const rect = joinSection.getBoundingClientRect();
   const total = Math.max(1, joinSection.offsetHeight - window.innerHeight);
   const pRaw = Math.max(0, Math.min(1, (-rect.top) / total));
-  // Shopify-like behavior: lower reading-speed value reveals faster.
-  const p = Math.max(0, Math.min(1, pRaw / joinReadingSpeed));
-  const seg = 1 / joinWords.length;
+  // Shopify-like feel: lower speed reveals sooner, but always reaches full at end.
+  const p = Math.pow(pRaw, joinReadingSpeed);
+  const seg = 1 / joinRevealEls.length;
 
-  joinWords.forEach((w, i) => {
+  joinRevealEls.forEach((w, i) => {
     const lp = Math.max(0, Math.min(1, (p - i * seg) / seg));
     const base = i === 0 ? joinStartOpacity : 0;
     w.style.opacity = (base + lp * (1 - base)).toFixed(3);
