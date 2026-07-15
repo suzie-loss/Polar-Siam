@@ -535,7 +535,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   position: relative;
   min-height: 260svh;
   padding: 0;
-  --join-start-opacity: 0.22;
+  --join-start-opacity: 0.1;
 }
 .join__pin {
   position: sticky;
