@@ -175,10 +175,48 @@ const joinStartOpacity = (() => {
   const v = parseFloat(joinSection.dataset.textStartOpacity || "0.22");
   return Number.isFinite(v) ? Math.max(0, Math.min(0.9, v)) : 0.22;
 })();
+const rolesLookbookSection = document.querySelector(".roles");
 const rolesLookbookCards = [...document.querySelectorAll(".role-grid .role-card")];
+let rolesLookbookTimers = [];
+
+function clearRolesLookbookTimers() {
+  rolesLookbookTimers.forEach((id) => clearTimeout(id));
+  rolesLookbookTimers = [];
+}
+
+function getRolesLookbookOrder() {
+  return [...rolesLookbookCards]
+    .map((card, index) => {
+      const rect = card.getBoundingClientRect();
+      return { card, index, top: rect.top, left: rect.left };
+    })
+    .sort((a, b) => {
+      const rowDelta = Math.abs(a.top - b.top);
+      if (rowDelta > 12) return b.top - a.top; // bottom row first
+      return a.left - b.left; // left to right within each row
+    })
+    .map((entry) => entry.card);
+}
+
+function queueRolesLookbook(visible) {
+  if (!rolesLookbookCards.length) return;
+  clearRolesLookbookTimers();
+
+  const ordered = getRolesLookbookOrder();
+  if (reduce) {
+    ordered.forEach((card) => card.classList.toggle("is-visible", visible));
+    return;
+  }
+
+  ordered.forEach((card, index) => {
+    const delay = index * 90;
+    const run = () => card.classList.toggle("is-visible", visible);
+    rolesLookbookTimers.push(setTimeout(run, visible ? delay : (ordered.length - 1 - index) * 70));
+  });
+}
 
 function initRolesLookbookReveal() {
-  if (!rolesLookbookCards.length) return;
+  if (!rolesLookbookSection || !rolesLookbookCards.length) return;
   if (reduce) {
     rolesLookbookCards.forEach((card) => card.classList.add("is-visible"));
     return;
@@ -186,11 +224,15 @@ function initRolesLookbookReveal() {
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      queueRolesLookbook(entry.isIntersecting);
     });
-  }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+  }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
 
-  rolesLookbookCards.forEach((card) => io.observe(card));
+  io.observe(rolesLookbookSection);
+
+  const rect = rolesLookbookSection.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  if (rect.top < vh * 0.92 && rect.bottom > 0) queueRolesLookbook(true);
 }
 
 function initAssemble() {
