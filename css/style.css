@@ -363,6 +363,16 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   white-space: nowrap;
   opacity: var(--rail-opacity, 1);
 }
+@media (max-width: 760px) {
+  .hero__rail-inner {
+    gap: 0.28rem;
+    font-size: 0.38rem;
+    letter-spacing: 0.16em;
+  }
+  .hero__rail-item {
+    line-height: 0.82;
+  }
+}
 
 /* --- the mark, in the shaft of light (grid-centred so anime can transform it freely) --- */
 .hero__emblem {
