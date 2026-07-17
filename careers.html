@@ -29,7 +29,13 @@
 
   /* role selection grid */
   .roles { padding: clamp(3rem, 8vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem); }
-  .roles__head { margin-bottom: clamp(3rem, 8vh, 6rem); }
+  .roles__head {
+    margin-bottom: clamp(3rem, 8vh, 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
   .role-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -131,12 +137,6 @@
   }
   @media (max-width: 680px) {
     .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .roles__head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
     .role-card {
       max-width: none;
       justify-content: center;
