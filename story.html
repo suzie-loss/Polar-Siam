@@ -145,6 +145,14 @@
     height: auto;
     object-fit: contain;
   }
+  .st-logo-mobile-hint {
+    display: none;
+    margin-top: -0.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--gold) 70%, var(--ink) 30%);
+  }
   .st-logo-mid__explain {
     width: min(920px, 92vw);
     margin: 0;
@@ -173,18 +181,52 @@
     text-transform: uppercase;
     min-width: 2.2ch;
   }
+  .logo-preview-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(9, 10, 12, 0.9);
+    z-index: 120;
+  }
+  .logo-preview-overlay.is-open {
+    display: flex;
+  }
+  .logo-preview-overlay img {
+    display: block;
+    width: min(94vw, 680px);
+    max-height: 90svh;
+    height: auto;
+    object-fit: contain;
+  }
+  body.logo-preview-open {
+    overflow: hidden;
+  }
   @media (max-width: 760px) {
     .st-logo-mid {
       padding-top: 8.4rem;
     }
+    .st-logo-mid img {
+      cursor: zoom-in;
+      width: min(94vw, 620px);
+    }
+    .st-logo-mobile-hint {
+      display: block;
+    }
     .st-logo-mid__explain {
-      padding: 1rem 0.9rem;
-      gap: 0.7rem;
+      width: min(760px, 86vw);
+      padding: 0.72rem 0.66rem;
+      gap: 0.52rem;
     }
     .st-logo-mid__explain li {
-      gap: 0.62rem;
-      font-size: 0.95rem;
-      line-height: 1.55;
+      gap: 0.48rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+    .st-logo-mid__explain strong {
+      letter-spacing: 0.12em;
     }
   }
 </style>
@@ -220,6 +262,7 @@
 
   <section class="st-logo-mid" aria-label="Polar Siam assembled logo">
     <img src="assets/logo/companystory.svg" alt="Polar Siam assembled logo" />
+    <p class="st-logo-mobile-hint">Tap to preview</p>
     <ul class="st-logo-mid__explain" aria-label="Logo explanation">
       <li><strong>1/</strong><span>The high circle stroke represents safety around us, a clear protective line at the center of our identity.</span></li>
       <li><strong>2/</strong><span>The clavicle-inspired structure reflects how the human clavicle creates power and stability for the upper body.</span></li>
@@ -227,6 +270,10 @@
       <li><strong>4/</strong><span>||. &nbsp;&nbsp;||</span></li>
     </ul>
   </section>
+
+  <div class="logo-preview-overlay" id="logoPreviewOverlay" aria-hidden="true">
+    <img src="assets/logo/companystory.svg" alt="Polar Siam logo preview" />
+  </div>
 
   <!-- ============ 2 · SCROLLING BAR ============ -->
   <section class="marquee" aria-hidden="true">
@@ -291,6 +338,34 @@
 </main>
 
 <script type="module" src="js/main.js?v=15"></script>
+<script>
+  (() => {
+    const mobileQuery = window.matchMedia('(max-width: 760px)');
+    const logo = document.querySelector('.st-logo-mid img');
+    const overlay = document.getElementById('logoPreviewOverlay');
+
+    if (!logo || !overlay) return;
+
+    const openPreview = () => {
+      if (!mobileQuery.matches) return;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('logo-preview-open');
+    };
+
+    const closePreview = () => {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('logo-preview-open');
+    };
+
+    logo.addEventListener('click', openPreview);
+    overlay.addEventListener('click', closePreview);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closePreview();
+    });
+  })();
+</script>
 
 </body>
 </html>
