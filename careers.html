@@ -38,36 +38,24 @@
   .role-card {
     position: relative;
     border: 1px solid var(--line);
-    background: linear-gradient(170deg, rgba(244, 243, 237, 0.95), rgba(232, 230, 223, 0.72));
+    background-image:
+      linear-gradient(170deg, rgba(244, 243, 237, 0.78), rgba(232, 230, 223, 0.64)),
+      var(--role-bg);
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat;
     min-height: clamp(118px, 16vw, 170px);
     padding: clamp(1rem, 2.1vw, 1.35rem);
     text-align: left;
     overflow: hidden;
     cursor: pointer;
-    transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+    transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease), background-position .35s var(--ease);
   }
-  .role-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--role-bg);
-    background-size: cover;
-    background-position: center;
-    opacity: 0.16;
-    transform: scale(1.02);
-    transition: opacity .35s var(--ease), transform .35s var(--ease);
-    pointer-events: none;
-  }
-  .role-card > * { position: relative; z-index: 1; }
   .role-card:hover {
     border-color: color-mix(in srgb, var(--ink) 48%, var(--line) 52%);
     transform: translateY(-3px);
     box-shadow: 0 16px 32px -22px rgba(30, 33, 29, 0.45);
-  }
-  .role-card:hover::before,
-  .role-card.is-selected::before {
-    opacity: 0.22;
-    transform: scale(1.04);
+    background-position: center, center 46%;
   }
   .role-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .role-card.is-selected {
