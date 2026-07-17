@@ -32,7 +32,7 @@
   .roles__head { margin-bottom: clamp(3rem, 8vh, 6rem); }
   .role-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: clamp(0.9rem, 2.1vw, 1.4rem);
   }
   .role-card {
@@ -40,27 +40,28 @@
     border: 1px solid var(--line);
     background: linear-gradient(170deg, rgba(246, 246, 242, 0.96), rgba(236, 234, 227, 0.94));
     aspect-ratio: 1 / 1;
+    max-width: 220px;
     min-height: 0;
-    padding: clamp(1rem, 2.1vw, 1.35rem);
+    padding: clamp(0.75rem, 1.5vw, 1rem);
     text-align: left;
     overflow: hidden;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
   }
   .role-card__x {
     position: absolute;
-    left: 0.7rem;
-    top: 0.6rem;
+    left: 0.62rem;
+    bottom: 0.56rem;
     font-family: var(--f-serif);
     font-size: 1.1rem;
     line-height: 1;
     color: var(--ink);
     opacity: 0;
     transform: scale(0.68) rotate(-12deg);
-    transform-origin: left top;
+    transform-origin: left bottom;
     transition: opacity .26s var(--ease), transform .36s var(--ease);
     pointer-events: none;
   }
@@ -82,23 +83,23 @@
   }
   .role-card__k {
     display: block;
-    font-size: 0.66rem;
+    font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.45rem;
   }
   .role-card__title {
     display: block;
     font-family: var(--f-serif);
-    font-size: clamp(1.1rem, 1.8vw, 1.42rem);
-    line-height: 1.15;
+    font-size: clamp(0.9rem, 1.35vw, 1.1rem);
+    line-height: 1.12;
     color: var(--ink);
   }
   .role-card__hint {
     position: absolute;
-    right: 0.7rem;
-    bottom: 0.6rem;
+    right: 0.55rem;
+    bottom: 0.45rem;
     font-size: 0.62rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -114,9 +115,13 @@
   .role-card:hover .role-card__hint,
   .role-card.is-selected .role-card__hint { opacity: 1; }
   @media (max-width: 980px) {
-    .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .role-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 680px) {
+    .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .role-card { max-width: none; }
+  }
+  @media (max-width: 460px) {
     .role-grid { grid-template-columns: 1fr; }
   }
 
