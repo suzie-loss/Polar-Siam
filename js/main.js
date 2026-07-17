@@ -175,6 +175,24 @@ const joinStartOpacity = (() => {
   const v = parseFloat(joinSection.dataset.textStartOpacity || "0.22");
   return Number.isFinite(v) ? Math.max(0, Math.min(0.9, v)) : 0.22;
 })();
+const rolesLookbookCards = [...document.querySelectorAll(".role-grid .role-card")];
+
+function initRolesLookbookReveal() {
+  if (!rolesLookbookCards.length) return;
+  if (reduce) {
+    rolesLookbookCards.forEach((card) => card.classList.add("is-visible"));
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("is-visible", entry.isIntersecting);
+    });
+  }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+
+  rolesLookbookCards.forEach((card) => io.observe(card));
+}
+
 function initAssemble() {
   if (!assembleSvg) return;
   assembleSection = assembleSvg.closest("section") || assembleSvg.parentElement;
@@ -709,6 +727,7 @@ function boot() {
   initScroll();
   initCursor();
   initReveals();
+  initRolesLookbookReveal();
   initForm();
   initApplyForm();
   initHeroMark();

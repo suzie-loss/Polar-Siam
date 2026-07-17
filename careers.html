@@ -54,6 +54,15 @@
     justify-content: flex-start;
     transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
   }
+  .role-card {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+    will-change: opacity, transform;
+  }
+  .role-card.is-visible {
+    opacity: 1;
+    transform: none;
+  }
   .role-card__x {
     position: absolute;
     left: 0.62rem;
@@ -122,6 +131,12 @@
   }
   @media (max-width: 680px) {
     .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .roles__head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     .role-card {
       max-width: none;
       justify-content: center;
