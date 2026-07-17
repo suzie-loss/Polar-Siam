@@ -623,20 +623,33 @@ function initCareersReveal() {
 function initLogoMark() {
   const stage = document.getElementById("logoStage");
   if (!stage) return; // story page only
-  const mark = document.getElementById("logoMark");
 
   // hover/focus a hotspot → reveal its meaning popup
   const pops = { disc: document.getElementById("pop-disc"), bone: document.getElementById("pop-bone") };
-  stage.querySelectorAll(".lm-hit").forEach((hit) => {
-    const pop = pops[hit.classList.contains("lm-hit--disc") ? "disc" : "bone"];
-    if (!pop) return;
-    const show = () => pop.classList.add("is-on");
-    const hide = () => pop.classList.remove("is-on");
-    hit.addEventListener("pointerenter", show);
-    hit.addEventListener("pointerleave", hide);
-    hit.addEventListener("focus", show);
-    hit.addEventListener("blur", hide);
+  const hits = [...stage.querySelectorAll(".lm-hit")];
+  if (!hits.length) return;
+
+  const showOnly = (which) => {
+    Object.entries(pops).forEach(([key, el]) => {
+      if (!el) return;
+      el.classList.toggle("is-on", key === which);
+    });
+  };
+
+  const hideAll = () => showOnly(null);
+  const hitKey = (hit) => (hit.classList.contains("lm-hit--disc") ? "disc" : "bone");
+
+  hits.forEach((hit) => {
+    const key = hitKey(hit);
+    hit.addEventListener("pointerenter", () => showOnly(key));
+    hit.addEventListener("mouseenter", () => showOnly(key));
+    hit.addEventListener("focus", () => showOnly(key));
+    hit.addEventListener("pointerleave", hideAll);
+    hit.addEventListener("mouseleave", hideAll);
+    hit.addEventListener("blur", hideAll);
   });
+
+  stage.addEventListener("pointerleave", hideAll);
 
   // Intentionally no hover motion/tilt: only hotspot popups should appear.
 }
