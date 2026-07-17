@@ -430,24 +430,45 @@ function initApplyForm() {
   const selectedLine = document.getElementById("applySelected");
   const roleCards = [...document.querySelectorAll(".role-card")];
   const btn = form.querySelector("button[type=submit]");
+  const chipInputs = [...form.querySelectorAll(".chip input")];
+  const positionInputs = chipInputs.filter((inp) => inp.name === "Position");
 
-  // chip toggle visual state
-  form.querySelectorAll(".chip input").forEach((inp) => {
-    const sync = () => inp.closest(".chip").classList.toggle("is-on", inp.checked);
-    inp.addEventListener("change", sync);
-    sync();
+  const syncChip = (inp) => inp.closest(".chip")?.classList.toggle("is-on", inp.checked);
+
+  const syncRoleStateFromForm = (preferredRole) => {
+    const checkedRoles = positionInputs.filter((inp) => inp.checked).map((inp) => inp.value);
+    const selectedRole =
+      preferredRole && checkedRoles.includes(preferredRole)
+        ? preferredRole
+        : (checkedRoles[checkedRoles.length - 1] || null);
+
+    roleCards.forEach((card) => card.classList.toggle("is-selected", !!selectedRole && card.dataset.role === selectedRole));
+
+    if (selectedLine) {
+      if (!checkedRoles.length) selectedLine.textContent = "";
+      else if (checkedRoles.length === 1) selectedLine.textContent = `Selected: ${checkedRoles[0]}`;
+      else selectedLine.textContent = `Selected: ${selectedRole} + ${checkedRoles.length - 1} more`;
+    }
+
+    form.classList.toggle("apply__form--locked", checkedRoles.length === 0);
+  };
+
+  chipInputs.forEach((inp) => {
+    inp.addEventListener("change", () => {
+      syncChip(inp);
+      if (inp.name === "Position") syncRoleStateFromForm(inp.checked ? inp.value : null);
+    });
+    syncChip(inp);
   });
 
   const pickRole = (role) => {
     if (!role) return;
-    form.classList.remove("apply__form--locked");
-    roleCards.forEach((card) => card.classList.toggle("is-selected", card.dataset.role === role));
-    const target = form.querySelector(`.chip input[value="${role.replace(/"/g, '\\"')}"]`);
-    if (target) {
-      target.checked = true;
-      target.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-    if (selectedLine) selectedLine.textContent = `Selected: ${role}`;
+    // Grid behaves as single-choice selector: switching cards updates form selection.
+    positionInputs.forEach((inp) => {
+      inp.checked = inp.value === role;
+      syncChip(inp);
+    });
+    syncRoleStateFromForm(role);
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -476,10 +497,8 @@ function initApplyForm() {
       });
       if (!res.ok) throw new Error("HTTP " + res.status);
       form.reset();
-      form.querySelectorAll(".chip.is-on").forEach((c) => c.classList.remove("is-on"));
-      roleCards.forEach((card) => card.classList.remove("is-selected"));
-      if (selectedLine) selectedLine.textContent = "";
-      form.classList.add("apply__form--locked");
+      chipInputs.forEach((inp) => syncChip(inp));
+      syncRoleStateFromForm(null);
       say("Application sent — we'll be in touch.", "ok");
     } catch (_) {
       say("Couldn't send just now — email studio@polarsiam.com.", "err");
