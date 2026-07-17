@@ -27,23 +27,68 @@
   .hire p { color: var(--ink-dim); max-width: 48ch; margin: 2rem auto 0; line-height: 1.7; }
   .hire a.mail { color: var(--ink); border-bottom: 1px solid var(--line); }
 
-  /* roles */
+  /* role selection grid */
   .roles { padding: clamp(3rem, 8vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem); }
   .roles__head { margin-bottom: clamp(3rem, 8vh, 6rem); }
-  .role { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; margin-bottom: clamp(4rem, 12vh, 9rem); }
-  .role--alt .role__text { order: 2; }
-  .role--alt .role__media { order: 1; }
-  .role__num { font-family: var(--f-serif); font-style: italic; color: var(--gold); font-size: clamp(1.5rem, 3vw, 2.2rem); }
-  .role__title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: 0.95; margin: 0.3rem 0 1.3rem; }
-  .role__title em { font-style: italic; }
-  .role__desc { color: var(--ink-dim); max-width: 42ch; line-height: 1.65; margin-bottom: 1.6rem; }
-  .role__tags { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; }
-  .role__tags span { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); padding-bottom: 0.4rem; border-bottom: 1px solid var(--line); }
-  .role__media { position: relative; aspect-ratio: 1/1; width: 100%; max-width: 280px; justify-self: center;
-    border-radius: 3px; overflow: hidden; border: 1px solid var(--line);
-    background: linear-gradient(180deg, #f1f1ee, #e5e5e1); display: grid; place-items: center; }
-  .role__media svg { width: 60%; height: 60%; color: var(--ink); display: block; }
-  @media (max-width: 760px) { .role { grid-template-columns: 1fr; gap: 1.5rem; } .role--alt .role__text, .role--alt .role__media { order: 0; } .role__media { max-width: 236px; } }
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.9rem, 2.1vw, 1.4rem);
+  }
+  .role-card {
+    position: relative;
+    border: 1px solid var(--line);
+    background: linear-gradient(170deg, rgba(244, 243, 237, 0.95), rgba(232, 230, 223, 0.72));
+    min-height: clamp(118px, 16vw, 170px);
+    padding: clamp(1rem, 2.1vw, 1.35rem);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .role-card:hover {
+    border-color: color-mix(in srgb, var(--ink) 48%, var(--line) 52%);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -22px rgba(30, 33, 29, 0.45);
+  }
+  .role-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .role-card.is-selected {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 35%, transparent);
+  }
+  .role-card__k {
+    display: block;
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.7rem;
+  }
+  .role-card__title {
+    display: block;
+    font-family: var(--f-serif);
+    font-size: clamp(1.1rem, 1.8vw, 1.42rem);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .role-card__hint {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.8rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    opacity: 0;
+    transition: opacity .25s var(--ease);
+  }
+  .role-card:hover .role-card__hint,
+  .role-card.is-selected .role-card__hint { opacity: 1; }
+  @media (max-width: 980px) {
+    .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .role-grid { grid-template-columns: 1fr; }
+  }
 
   /* ===== scroll-reveal · "Passe-Partout" (clip-path mount, GPU-cheap, settles) ===== */
   .cw-line { display: block; }
@@ -61,7 +106,9 @@
   .apply__wrap { max-width: 720px; margin: 0 auto; }
   .apply__head { margin-bottom: 2.8rem; }
   .apply__intro { color: var(--ink-dim); max-width: 48ch; margin-top: 1rem; line-height: 1.65; }
+  .apply__selected { margin-top: 0.8rem; font-size: 0.78rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); min-height: 1.2em; }
   .apply__form { display: flex; flex-direction: column; gap: 2.2rem; }
+  .apply__form.apply__form--locked { display: none; }
   .field { display: flex; flex-direction: column; gap: 0.8rem; }
   .field__label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); }
   .field__label em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: 0.65; }
@@ -143,82 +190,35 @@
     </div>
   </section>
 
-  <!-- ============ 2 · THE ROLES (text + image) ============ -->
+  /* ============ 2 · ROLE LOOKBOOK GRID ============ */
   <section class="roles" id="roles">
     <div class="roles__head">
       <h2 class="section-title cw">Who we're<br>looking for</h2>
-      <p class="section-tag cw">Three roles, open now</p>
+      <p class="section-tag cw">Select one from the lookbook</p>
     </div>
-
-    <article class="role">
-      <div class="role__text">
-        <span class="role__num cw">I</span>
-        <h3 class="role__title cw">Graphic<br><em>Designer</em></h3>
-        <p class="role__desc cw">Shape how the house speaks. You'll own the visual system — the crest, kit graphics, the drops — across web, print and product. Restraint, rhythm, and a belief that every detail means something.</p>
-        <div class="role__tags"><span class="cw">Brand</span><span class="cw">Kit Graphics</span><span class="cw">Typography</span></div>
-      </div>
-      <div class="role__media cw" aria-hidden="true">
-        <!-- pen tool + bezier: the graphic designer's instrument -->
-        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <g vector-effect="non-scaling-stroke">
-            <g stroke="var(--gold)" stroke-width="1" opacity=".28"><line x1="18" y1="30" x2="102" y2="30"/><line x1="18" y1="90" x2="102" y2="90"/><line x1="30" y1="18" x2="30" y2="102"/><line x1="90" y1="18" x2="90" y2="102"/></g>
-            <path d="M22 92 C 40 40, 80 96, 98 32" stroke="currentColor" stroke-width="2.4"/>
-            <g stroke="var(--gold)" stroke-width="1.4"><line x1="22" y1="92" x2="40" y2="40"/><line x1="98" y1="32" x2="80" y2="96"/></g>
-            <circle cx="40" cy="40" r="3.4" fill="var(--gold)" stroke="none"/>
-            <circle cx="80" cy="96" r="3.4" fill="var(--gold)" stroke="none"/>
-            <rect x="17.5" y="87.5" width="9" height="9" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
-            <rect x="93.5" y="27.5" width="9" height="9" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
-            <g transform="translate(60 60) rotate(45)"><path d="M-7 -18 L7 -18 L7 6 L0 16 L-7 6 Z" fill="var(--bg)" stroke="currentColor" stroke-width="2"/><line x1="0" y1="6" x2="0" y2="-4"/><circle cx="0" cy="-9" r="2.4" fill="currentColor" stroke="none"/></g>
-          </g>
-        </svg>
-      </div>
-    </article>
-
-    <article class="role role--alt">
-      <div class="role__text">
-        <span class="role__num cw">II</span>
-        <h3 class="role__title cw">Video<br><em>Editor</em></h3>
-        <p class="role__desc cw">Cut the films that move the brand — launch teasers, behind-the-bench, campaign edits. You think in motion and pace, and you know when to hold a frame.</p>
-        <div class="role__tags"><span class="cw">Motion</span><span class="cw">Campaign</span><span class="cw">Social</span></div>
-      </div>
-      <div class="role__media cw" aria-hidden="true">
-        <!-- viewport + play + timeline scrubber: the editor's frame -->
-        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <g vector-effect="non-scaling-stroke">
-            <rect x="22" y="26" width="76" height="52" rx="4" stroke="currentColor" stroke-width="2.2"/>
-            <g stroke="var(--gold)" stroke-width="1" opacity=".55"><rect x="26" y="30" width="4" height="5" rx="1"/><rect x="26" y="41" width="4" height="5" rx="1"/><rect x="26" y="52" width="4" height="5" rx="1"/><rect x="26" y="63" width="4" height="5" rx="1"/><rect x="90" y="30" width="4" height="5" rx="1"/><rect x="90" y="41" width="4" height="5" rx="1"/><rect x="90" y="52" width="4" height="5" rx="1"/><rect x="90" y="63" width="4" height="5" rx="1"/></g>
-            <path d="M53 40 L72 52 L53 64 Z" fill="var(--bg)" stroke="currentColor" stroke-width="2"/>
-            <line x1="22" y1="96" x2="98" y2="96" stroke="currentColor" stroke-width="2"/>
-            <g stroke="currentColor" stroke-width="1.4" opacity=".55"><line x1="34" y1="92" x2="34" y2="100"/><line x1="46" y1="93" x2="46" y2="99"/><line x1="72" y1="93" x2="72" y2="99"/><line x1="86" y1="92" x2="86" y2="100"/></g>
-            <line x1="60" y1="88" x2="60" y2="104" stroke="var(--gold)" stroke-width="2"/>
-            <circle cx="60" cy="88" r="3.4" fill="var(--gold)" stroke="none"/>
-          </g>
-        </svg>
-      </div>
-    </article>
-
-    <article class="role">
-      <div class="role__text">
-        <span class="role__num cw">III</span>
-        <h3 class="role__title cw">Fashion<br><em>Model</em></h3>
-        <p class="role__desc cw">Wear the kit and carry the story — editorial, lookbook and campaign. Represent the house on and off the pitch, for the players, the staff and everyone under the wing.</p>
-        <div class="role__tags"><span class="cw">Editorial</span><span class="cw">Lookbook</span><span class="cw">Campaign</span></div>
-      </div>
-      <div class="role__media cw" aria-hidden="true">
-        <!-- tailor's dress form + winged mark on the chest: the house, worn -->
-        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <g vector-effect="non-scaling-stroke">
-            <circle cx="60" cy="16" r="4.6" stroke="currentColor" stroke-width="2"/>
-            <line x1="60" y1="20.6" x2="60" y2="26"/>
-            <path d="M54 27 C 46 27, 40 30, 39 39 C 38 49, 47 57, 48 67 C 49 75, 44 79, 44 85 C 44 90, 51 91, 60 91 C 69 91, 76 90, 76 85 C 76 79, 71 75, 72 67 C 73 57, 82 49, 81 39 C 80 30, 74 27, 66 27 C 64 23, 56 23, 54 27 Z" stroke="currentColor" stroke-width="2.2"/>
-            <path d="M53 34 C 51 50, 51 68, 53 84 M67 34 C 69 50, 69 68, 67 84" stroke="var(--gold)" stroke-width="1" opacity=".4"/>
-            <line x1="60" y1="91" x2="60" y2="106"/>
-            <path d="M48 108 C 52 104, 68 104, 72 108" stroke="currentColor" stroke-width="2"/>
-            <g transform="translate(60 52)" stroke="none"><circle cx="0" cy="0" r="2.6" fill="var(--gold)"/><path d="M2.6 -1.4 L11 -4.4 L11 1.6 Z" fill="var(--gold)" opacity=".9"/><path d="M-2.6 -1.4 L-11 -4.4 L-11 1.6 Z" fill="var(--gold)" opacity=".5"/></g>
-          </g>
-        </svg>
-      </div>
-    </article>
+    <div class="role-grid">
+      <button class="role-card cw" type="button" data-role="Graphic Designer" data-cursor="hover">
+        <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="Video Editor" data-cursor="hover">
+        <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="Fashion Model" data-cursor="hover">
+        <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="3D Garment Designer" data-cursor="hover">
+        <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="Pattern Cutter" data-cursor="hover">
+        <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="Social Media Manager" data-cursor="hover">
+        <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card cw" type="button" data-role="Photographer" data-cursor="hover">
+        <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
+      </button>
+    </div>
   </section>
 
   <!-- ============ 3 · APPLY FORM ============ -->
@@ -226,10 +226,11 @@
     <div class="apply__wrap">
       <div class="apply__head">
         <h2 class="section-title cw">Apply</h2>
-        <p class="apply__intro cw">No cover letters. Tell us your email, what you do, and a few words — we read every one.</p>
+        <p class="apply__intro cw">Choose a role from the lookbook above. The form unlocks once a role is selected.</p>
+        <p class="apply__selected" id="applySelected"></p>
       </div>
 
-      <form id="applyForm" class="apply__form" novalidate>
+      <form id="applyForm" class="apply__form apply__form--locked" novalidate>
         <label class="field cw">
           <span class="field__label">Your email</span>
           <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" data-cursor="hover" />

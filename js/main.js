@@ -427,6 +427,8 @@ function initApplyForm() {
   const form = document.getElementById("applyForm");
   if (!form) return;
   const status = document.getElementById("applyStatus");
+  const selectedLine = document.getElementById("applySelected");
+  const roleCards = [...document.querySelectorAll(".role-card")];
   const btn = form.querySelector("button[type=submit]");
 
   // chip toggle visual state
@@ -434,6 +436,29 @@ function initApplyForm() {
     const sync = () => inp.closest(".chip").classList.toggle("is-on", inp.checked);
     inp.addEventListener("change", sync);
     sync();
+  });
+
+  const pickRole = (role) => {
+    if (!role) return;
+    form.classList.remove("apply__form--locked");
+    roleCards.forEach((card) => card.classList.toggle("is-selected", card.dataset.role === role));
+    const target = form.querySelector(`.chip input[value="${role.replace(/"/g, '\\"')}"]`);
+    if (target) {
+      target.checked = true;
+      target.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    if (selectedLine) selectedLine.textContent = `Selected: ${role}`;
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  roleCards.forEach((card) => {
+    card.addEventListener("click", () => pickRole(card.dataset.role));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        pickRole(card.dataset.role);
+      }
+    });
   });
 
   const say = (msg, kind) => { if (status) { status.textContent = msg; status.className = "apply__status is-" + kind; } };
@@ -452,6 +477,9 @@ function initApplyForm() {
       if (!res.ok) throw new Error("HTTP " + res.status);
       form.reset();
       form.querySelectorAll(".chip.is-on").forEach((c) => c.classList.remove("is-on"));
+      roleCards.forEach((card) => card.classList.remove("is-selected"));
+      if (selectedLine) selectedLine.textContent = "";
+      form.classList.add("apply__form--locked");
       say("Application sent — we'll be in touch.", "ok");
     } catch (_) {
       say("Couldn't send just now — email studio@polarsiam.com.", "err");
