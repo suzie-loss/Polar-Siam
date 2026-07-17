@@ -369,13 +369,29 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
     --hero-bar-gutter: clamp(12px, 1.2vw, 20px);
   }
   .hero__rail--left {
-    left: calc(50% - (var(--hero-bar-width) / 2) - (var(--hero-bar-gutter) / 2));
+    left: calc(50% - (8.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
     transform: translateX(-50%);
   }
   .hero__rail--right {
-    left: calc(50% + (var(--hero-bar-width) / 2) + (var(--hero-bar-gutter) / 2));
+    left: calc(50% + (8.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
     right: auto;
     transform: translateX(-50%);
+  }
+}
+@media (min-width: 1400px) {
+  .hero__rail--left {
+    left: calc(50% - (10.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+  .hero__rail--right {
+    left: calc(50% + (10.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+}
+@media (min-width: 1800px) {
+  .hero__rail--left {
+    left: calc(50% - (12.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+  }
+  .hero__rail--right {
+    left: calc(50% + (12.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
   }
 }
 @media (max-width: 760px) {
