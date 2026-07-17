@@ -38,56 +38,47 @@
   .role-card {
     position: relative;
     border: 1px solid var(--line);
-    background-color: #ebe9e2;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    isolation: isolate;
-    min-height: clamp(118px, 16vw, 170px);
-    padding: clamp(1rem, 2.1vw, 1.35rem) clamp(1rem, 2.1vw, 1.35rem) 2.2rem;
+    background: linear-gradient(170deg, rgba(246, 246, 242, 0.96), rgba(236, 234, 227, 0.94));
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    padding: clamp(1rem, 2.1vw, 1.35rem);
     text-align: left;
     overflow: hidden;
     cursor: pointer;
-    transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
   }
-  .role-card::before {
-    content: "";
+  .role-card__x {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(170deg, rgba(244, 243, 237, 0.66), rgba(232, 230, 223, 0.52));
-    z-index: 0;
-  }
-  .role-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--card-image);
-    background-size: cover;
-    background-position: center;
-    opacity: 0.34;
+    left: 0.7rem;
+    top: 0.6rem;
+    font-family: var(--f-serif);
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--ink);
+    opacity: 0;
+    transform: scale(0.68) rotate(-12deg);
+    transform-origin: left top;
+    transition: opacity .26s var(--ease), transform .36s var(--ease);
     pointer-events: none;
-    z-index: -1;
-    transform: scale(1.03);
-    transition: opacity .35s var(--ease), transform .35s var(--ease);
-  }
-  .role-card > * {
-    position: relative;
-    z-index: 1;
   }
   .role-card:hover {
     border-color: color-mix(in srgb, var(--ink) 48%, var(--line) 52%);
     transform: translateY(-3px);
     box-shadow: 0 16px 32px -22px rgba(30, 33, 29, 0.45);
-  }
-  .role-card:hover::after,
-  .role-card.is-selected::after {
-    opacity: 0.5;
-    transform: scale(1.05);
+    background: linear-gradient(170deg, rgba(247, 247, 243, 1), rgba(238, 236, 229, 0.98));
   }
   .role-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .role-card.is-selected {
     border-color: var(--ink);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 35%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 35%, transparent), 0 14px 26px -22px rgba(30, 33, 29, 0.44);
+    background: linear-gradient(170deg, rgba(247, 247, 243, 1), rgba(238, 236, 229, 0.98));
+  }
+  .role-card.is-selected .role-card__x {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
   }
   .role-card__k {
     display: block;
@@ -122,14 +113,6 @@
   }
   .role-card:hover .role-card__hint,
   .role-card.is-selected .role-card__hint { opacity: 1; }
-
-  .role-card--graphic { --card-image: url('/assets/apply-options/graphic-designer.jpg'); }
-  .role-card--video { --card-image: url('/assets/apply-options/video-editor.jpg'); }
-  .role-card--fashion { --card-image: url('/assets/apply-options/fashion-model.jpg'); }
-  .role-card--garment { --card-image: url('/assets/apply-options/3d-garment-designer.jpg'); }
-  .role-card--pattern { --card-image: url('/assets/apply-options/pattern-cutter.jpg'); }
-  .role-card--social { --card-image: url('/assets/apply-options/social-media-manager.jpg'); }
-  .role-card--photo { --card-image: url('/assets/apply-options/photographer.jpg'); }
   @media (max-width: 980px) {
     .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
@@ -244,25 +227,32 @@
       <p class="section-tag cw">Select one from the lookbook</p>
     </div>
     <div class="role-grid">
-      <button class="role-card role-card--graphic" type="button" data-role="Graphic Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--video" type="button" data-role="Video Editor" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--fashion" type="button" data-role="Fashion Model" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--garment" type="button" data-role="3D Garment Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--pattern" type="button" data-role="Pattern Cutter" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--social" type="button" data-role="Social Media Manager" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card role-card--photo" type="button" data-role="Photographer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Photographer" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
       </button>
     </div>
