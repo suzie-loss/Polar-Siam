@@ -209,9 +209,9 @@ function queueRolesLookbook(visible) {
   }
 
   ordered.forEach((card, index) => {
-    const delay = index * 90;
+    const delay = index * 150;
     const run = () => card.classList.toggle("is-visible", visible);
-    rolesLookbookTimers.push(setTimeout(run, visible ? delay : (ordered.length - 1 - index) * 70));
+    rolesLookbookTimers.push(setTimeout(run, visible ? delay : (ordered.length - 1 - index) * 110));
   });
 }
 
