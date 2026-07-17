@@ -363,6 +363,20 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   white-space: nowrap;
   opacity: var(--rail-opacity, 1);
 }
+@media (min-width: 761px) {
+  .hero {
+    --hero-bar-width: clamp(40px, 4.1vw, 57px);
+    --hero-bar-gutter: clamp(12px, 1.2vw, 20px);
+  }
+  .hero__rail--left {
+    left: clamp(1.4rem, 4vw, 3.6rem);
+    transform: none;
+  }
+  .hero__rail--right {
+    right: clamp(1.4rem, 4vw, 3.6rem);
+    transform: none;
+  }
+}
 @media (max-width: 760px) {
   .hero__rail-inner {
     gap: clamp(0.3rem, 0.75vh, 0.5rem);
