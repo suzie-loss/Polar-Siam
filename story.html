@@ -128,6 +128,21 @@
   .st-title { font-family: var(--f-serif); font-weight: 500; font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.95; letter-spacing: -0.01em; max-width: 13ch; }
   .st-title em { font-style: italic; }
   .st-sub { max-width: 46ch; margin-top: 2.2rem; color: var(--ink-dim); font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.75; }
+
+  /* centered logo block */
+  .st-logo-mid {
+    min-height: 62svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem var(--pad);
+  }
+  .st-logo-mid img {
+    display: block;
+    width: min(920px, 86vw);
+    height: auto;
+    object-fit: contain;
+  }
 </style>
 
 </head>
@@ -181,6 +196,10 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="st-logo-mid" aria-label="Polar Siam assembled logo">
+    <img src="assets/logo-polar-siam-assembled.svg" alt="Polar Siam assembled logo" />
   </section>
 
   <!-- ============ 3 · ASSEMBLING CREST ============ -->
