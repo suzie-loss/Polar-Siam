@@ -363,19 +363,64 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
   white-space: nowrap;
   opacity: var(--rail-opacity, 1);
 }
-@media (min-width: 761px) {
+@media (min-width: 761px) and (max-width: 1099px) {
   .hero {
-    --hero-bar-width: clamp(34px, 4.9vw, 74px);
-    --hero-bar-gutter: clamp(10px, 1.1vw, 18px);
+    --hero-bar-width: 26px;
+    --hero-bar-gutter: 10px;
   }
   .hero__rail--left {
-    left: clamp(1.4rem, 3vw, 2.8rem);
-    transform: none;
+    left: calc(50% - (9.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    transform: translateX(-50%);
   }
   .hero__rail--right {
-    right: clamp(1.4rem, 3vw, 2.8rem);
-    left: auto;
-    transform: none;
+    left: calc(50% + (9.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+@media (min-width: 1100px) and (max-width: 1399px) {
+  .hero {
+    --hero-bar-width: 32px;
+    --hero-bar-gutter: 12px;
+  }
+  .hero__rail--left {
+    left: calc(50% - (9.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    transform: translateX(-50%);
+  }
+  .hero__rail--right {
+    left: calc(50% + (9.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+@media (min-width: 1400px) and (max-width: 1799px) {
+  .hero {
+    --hero-bar-width: 40px;
+    --hero-bar-gutter: 14px;
+  }
+  .hero__rail--left {
+    left: calc(50% - (11.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    transform: translateX(-50%);
+  }
+  .hero__rail--right {
+    left: calc(50% + (11.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+@media (min-width: 1800px) {
+  .hero {
+    --hero-bar-width: 46px;
+    --hero-bar-gutter: 16px;
+  }
+  .hero__rail--left {
+    left: calc(50% - (13.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    transform: translateX(-50%);
+  }
+  .hero__rail--right {
+    left: calc(50% + (13.5 * (var(--hero-bar-width) + var(--hero-bar-gutter))));
+    right: auto;
+    transform: translateX(-50%);
   }
 }
 @media (max-width: 760px) {
