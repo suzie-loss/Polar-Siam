@@ -42,13 +42,32 @@
     min-height: clamp(118px, 16vw, 170px);
     padding: clamp(1rem, 2.1vw, 1.35rem);
     text-align: left;
+    overflow: hidden;
     cursor: pointer;
     transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
   }
+  .role-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--role-bg);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.16;
+    transform: scale(1.02);
+    transition: opacity .35s var(--ease), transform .35s var(--ease);
+    pointer-events: none;
+  }
+  .role-card > * { position: relative; z-index: 1; }
   .role-card:hover {
     border-color: color-mix(in srgb, var(--ink) 48%, var(--line) 52%);
     transform: translateY(-3px);
     box-shadow: 0 16px 32px -22px rgba(30, 33, 29, 0.45);
+  }
+  .role-card:hover::before,
+  .role-card.is-selected::before {
+    opacity: 0.22;
+    transform: scale(1.04);
   }
   .role-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .role-card.is-selected {
@@ -197,25 +216,25 @@
       <p class="section-tag cw">Select one from the lookbook</p>
     </div>
     <div class="role-grid">
-      <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover" style="--role-bg: url('assets/apply%20options/graphic%20designer.jpg');">
         <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover" style="--role-bg: url('assets/apply%20options/video%20editor.jpg');">
         <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover" style="--role-bg: url('assets/apply%20options/fashion%20model.jpg');">
         <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover" style="--role-bg: url('assets/apply%20options/3d%20garment%20designer.jpg');">
         <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover" style="--role-bg: url('assets/apply%20options/pettern%20cutter.jpg');">
         <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover" style="--role-bg: url('assets/apply%20options/pexels-walls-io-440716388-15555796.jpg');">
         <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Photographer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Photographer" data-cursor="hover" style="--role-bg: url('assets/apply%20options/photographer.jpg');">
         <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
       </button>
     </div>
