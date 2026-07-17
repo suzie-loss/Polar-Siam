@@ -33,14 +33,14 @@
   .role-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(0.9rem, 2.1vw, 1.4rem);
+    gap: clamp(0.4rem, 1vw, 0.68rem);
   }
   .role-card {
     position: relative;
     border: 1px solid var(--line);
     background: linear-gradient(170deg, rgba(246, 246, 242, 0.96), rgba(236, 234, 227, 0.94));
     aspect-ratio: 1 / 1;
-    max-width: 220px;
+    width: 100%;
     min-height: 0;
     padding: clamp(0.75rem, 1.5vw, 1rem);
     text-align: left;
@@ -260,6 +260,10 @@
         <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
       </button>
+      <button class="role-card" type="button" data-role="Stylist" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
+        <span class="role-card__k">VIII</span><span class="role-card__title">Stylist</span><span class="role-card__hint">Select</span>
+      </button>
     </div>
   </section>
 
@@ -288,6 +292,7 @@
             <label class="chip cw"><input type="checkbox" name="Position" value="Pattern Cutter" /><span>Pattern Cutter</span></label>
             <label class="chip cw"><input type="checkbox" name="Position" value="Social Media Manager" /><span>Social Media Manager</span></label>
             <label class="chip cw"><input type="checkbox" name="Position" value="Photographer" /><span>Photographer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Stylist" /><span>Stylist</span></label>
           </div>
         </div>
 
