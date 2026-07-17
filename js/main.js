@@ -638,23 +638,7 @@ function initLogoMark() {
     hit.addEventListener("blur", hide);
   });
 
-  // cursor-driven 3D tilt so the mark (and its feather "lines") lift toward the pointer
-  if (reduce || window.matchMedia("(hover: none)").matches || !mark) return;
-  let tX = 0, tY = 0, tS = 1, cX = 0, cY = 0, cS = 1;
-  stage.addEventListener("pointermove", (e) => {
-    const r = stage.getBoundingClientRect();
-    const nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-    const ny = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-    tY = Math.max(-1, Math.min(1, nx)) * 7;   // rotateY (follows left/right)
-    tX = Math.max(-1, Math.min(1, ny)) * -6;  // rotateX (follows up/down)
-    tS = 1.04;
-  });
-  stage.addEventListener("pointerleave", () => { tX = 0; tY = 0; tS = 1; });
-  (function loop() {
-    cX += (tX - cX) * 0.12; cY += (tY - cY) * 0.12; cS += (tS - cS) * 0.12;
-    mark.style.transform = `rotateX(${cX.toFixed(2)}deg) rotateY(${cY.toFixed(2)}deg) scale(${cS.toFixed(3)})`;
-    requestAnimationFrame(loop);
-  })();
+  // Intentionally no hover motion/tilt: only hotspot popups should appear.
 }
 
 // ---------------------------------------------------------------
