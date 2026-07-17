@@ -40,7 +40,7 @@
     border: 1px solid var(--line);
     background: linear-gradient(170deg, rgba(244, 243, 237, 0.58), rgba(232, 230, 223, 0.44));
     min-height: clamp(118px, 16vw, 170px);
-    padding: clamp(1rem, 2.1vw, 1.35rem);
+    padding: clamp(1rem, 2.1vw, 1.35rem) clamp(1rem, 2.1vw, 1.35rem) 2.2rem;
     text-align: left;
     overflow: hidden;
     cursor: pointer;
@@ -93,12 +93,17 @@
   }
   .role-card__hint {
     position: absolute;
-    right: 0.9rem;
-    bottom: 0.8rem;
+    right: 0.7rem;
+    bottom: 0.6rem;
     font-size: 0.62rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-dim);
+    color: var(--ink);
+    background: rgba(247, 247, 244, 0.82);
+    border: 1px solid rgba(30, 33, 29, 0.16);
+    border-radius: 999px;
+    padding: 0.28rem 0.52rem;
+    line-height: 1;
     opacity: 0;
     transition: opacity .25s var(--ease);
   }
@@ -219,31 +224,31 @@
     </div>
     <div class="role-grid">
       <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/graphic designer.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/graphic-designer.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/video editor.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/video-editor.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/fashion model.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/fashion-model.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/3d garment designer.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/3d-garment-designer.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/pettern cutter.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/pattern-cutter.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/pexels-walls-io-440716388-15555796.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/social-media-manager.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
       </button>
       <button class="role-card" type="button" data-role="Photographer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply options/photographer.jpg" alt="" aria-hidden="true" />
+        <img class="role-card__bg" src="assets/apply-options/photographer.jpg" alt="" aria-hidden="true" />
         <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
       </button>
     </div>
