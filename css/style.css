@@ -369,12 +369,13 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
     --hero-bar-gutter: clamp(12px, 1.2vw, 20px);
   }
   .hero__rail--left {
-    left: clamp(1.4rem, 4vw, 3.6rem);
-    transform: none;
+    left: calc(50% - (var(--hero-bar-width) / 2) - (var(--hero-bar-gutter) / 2));
+    transform: translateX(-50%);
   }
   .hero__rail--right {
-    right: clamp(1.4rem, 4vw, 3.6rem);
-    transform: none;
+    left: calc(50% + (var(--hero-bar-width) / 2) + (var(--hero-bar-gutter) / 2));
+    right: auto;
+    transform: translateX(-50%);
   }
 }
 @media (max-width: 760px) {
