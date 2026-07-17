@@ -365,12 +365,12 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 }
 @media (max-width: 760px) {
   .hero__rail-inner {
-    gap: 0.28rem;
-    font-size: 0.38rem;
-    letter-spacing: 0.16em;
+    gap: 0.4rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
   }
   .hero__rail-item {
-    line-height: 0.82;
+    line-height: 0.9;
   }
 }
 
