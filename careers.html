@@ -38,7 +38,11 @@
   .role-card {
     position: relative;
     border: 1px solid var(--line);
-    background: linear-gradient(170deg, rgba(244, 243, 237, 0.58), rgba(232, 230, 223, 0.44));
+    background-color: #ebe9e2;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    isolation: isolate;
     min-height: clamp(118px, 16vw, 170px);
     padding: clamp(1rem, 2.1vw, 1.35rem) clamp(1rem, 2.1vw, 1.35rem) 2.2rem;
     text-align: left;
@@ -46,18 +50,27 @@
     cursor: pointer;
     transition: border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
   }
-  .role-card__bg {
+  .role-card::before {
+    content: "";
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.46;
+    background: linear-gradient(170deg, rgba(244, 243, 237, 0.66), rgba(232, 230, 223, 0.52));
+    z-index: 0;
+  }
+  .role-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--card-image);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.34;
     pointer-events: none;
-    transform: scale(1.02);
+    z-index: -1;
+    transform: scale(1.03);
     transition: opacity .35s var(--ease), transform .35s var(--ease);
   }
-  .role-card > :not(.role-card__bg) {
+  .role-card > * {
     position: relative;
     z-index: 1;
   }
@@ -66,9 +79,9 @@
     transform: translateY(-3px);
     box-shadow: 0 16px 32px -22px rgba(30, 33, 29, 0.45);
   }
-  .role-card:hover .role-card__bg,
-  .role-card.is-selected .role-card__bg {
-    opacity: 0.62;
+  .role-card:hover::after,
+  .role-card.is-selected::after {
+    opacity: 0.5;
     transform: scale(1.05);
   }
   .role-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
@@ -109,6 +122,14 @@
   }
   .role-card:hover .role-card__hint,
   .role-card.is-selected .role-card__hint { opacity: 1; }
+
+  .role-card--graphic { --card-image: url('/assets/apply-options/graphic-designer.jpg'); }
+  .role-card--video { --card-image: url('/assets/apply-options/video-editor.jpg'); }
+  .role-card--fashion { --card-image: url('/assets/apply-options/fashion-model.jpg'); }
+  .role-card--garment { --card-image: url('/assets/apply-options/3d-garment-designer.jpg'); }
+  .role-card--pattern { --card-image: url('/assets/apply-options/pattern-cutter.jpg'); }
+  .role-card--social { --card-image: url('/assets/apply-options/social-media-manager.jpg'); }
+  .role-card--photo { --card-image: url('/assets/apply-options/photographer.jpg'); }
   @media (max-width: 980px) {
     .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
@@ -223,32 +244,25 @@
       <p class="section-tag cw">Select one from the lookbook</p>
     </div>
     <div class="role-grid">
-      <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/graphic-designer.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--graphic" type="button" data-role="Graphic Designer" data-cursor="hover">
         <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/video-editor.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--video" type="button" data-role="Video Editor" data-cursor="hover">
         <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/fashion-model.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--fashion" type="button" data-role="Fashion Model" data-cursor="hover">
         <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/3d-garment-designer.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--garment" type="button" data-role="3D Garment Designer" data-cursor="hover">
         <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/pattern-cutter.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--pattern" type="button" data-role="Pattern Cutter" data-cursor="hover">
         <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/social-media-manager.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--social" type="button" data-role="Social Media Manager" data-cursor="hover">
         <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Photographer" data-cursor="hover">
-        <img class="role-card__bg" src="assets/apply-options/photographer.jpg" alt="" aria-hidden="true" />
+      <button class="role-card role-card--photo" type="button" data-role="Photographer" data-cursor="hover">
         <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
       </button>
     </div>
