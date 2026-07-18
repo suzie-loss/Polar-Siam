@@ -148,6 +148,14 @@
       font-size: clamp(1.1rem, 4.4vw, 1.35rem);
     }
   }
+  @media (max-width: 760px) {
+    .role-card {
+      clip-path: none;
+      opacity: 1;
+      transform: none;
+      transition: border-color .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
+    }
+  }
   @media (max-width: 460px) {
     .role-grid { grid-template-columns: 1fr; }
   }
@@ -259,37 +267,41 @@
       <p class="section-tag cw">Select one from the lookbook</p>
     </div>
     <div class="role-grid">
-      <button class="role-card" type="button" data-role="Graphic Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="creative director" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">I</span><span class="role-card__title">Graphic Designer</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">I</span><span class="role-card__title">creative director</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Video Editor" data-cursor="hover">
+      <button class="role-card" type="button" data-role="fashion designer / Apparel designer" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">II</span><span class="role-card__title">Video Editor</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">II</span><span class="role-card__title">fashion designer / Apparel designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Fashion Model" data-cursor="hover">
+      <button class="role-card" type="button" data-role="textile/Fabric developer" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">III</span><span class="role-card__title">Fashion Model</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">III</span><span class="role-card__title">textile/Fabric developer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="3D Garment Designer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="color&material designer (CMF)" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">IV</span><span class="role-card__title">3D Garment Designer</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">IV</span><span class="role-card__title">color&material designer (CMF)</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Pattern Cutter" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Pattern Maker (Modeliste)" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">V</span><span class="role-card__title">Pattern Cutter</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">V</span><span class="role-card__title">Pattern Maker (Modeliste)</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Social Media Manager" data-cursor="hover">
+      <button class="role-card" type="button" data-role="garment technician / technical designer" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">VI</span><span class="role-card__title">Social Media Manager</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">VI</span><span class="role-card__title">garment technician / technical designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Photographer" data-cursor="hover">
+      <button class="role-card" type="button" data-role="3D designer" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">VII</span><span class="role-card__title">Photographer</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">VII</span><span class="role-card__title">3D designer</span><span class="role-card__hint">Select</span>
       </button>
-      <button class="role-card" type="button" data-role="Stylist" data-cursor="hover">
+      <button class="role-card" type="button" data-role="graphic designer" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
-        <span class="role-card__k">VIII</span><span class="role-card__title">Stylist</span><span class="role-card__hint">Select</span>
+        <span class="role-card__k">VIII</span><span class="role-card__title">graphic designer</span><span class="role-card__hint">Select</span>
+      </button>
+      <button class="role-card" type="button" data-role="accessory designer" data-cursor="hover">
+        <span class="role-card__x" aria-hidden="true">X</span>
+        <span class="role-card__k">IX</span><span class="role-card__title">accessory designer</span><span class="role-card__hint">Select</span>
       </button>
     </div>
   </section>
@@ -312,14 +324,15 @@
         <div class="field">
           <span class="field__label cw">What are you applying for? <em>— select any</em></span>
           <div class="chips">
-            <label class="chip cw"><input type="checkbox" name="Position" value="Graphic Designer" /><span>Graphic Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Video Editor" /><span>Video Editor</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Fashion Model" /><span>Fashion Model</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="3D Garment Designer" /><span>3D Garment Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Pattern Cutter" /><span>Pattern Cutter</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Social Media Manager" /><span>Social Media Manager</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Photographer" /><span>Photographer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Stylist" /><span>Stylist</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="creative director" /><span>creative director</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="fashion designer / Apparel designer" /><span>fashion designer / Apparel designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="textile/Fabric developer" /><span>textile/Fabric developer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="color&material designer (CMF)" /><span>color&material designer (CMF)</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="Pattern Maker (Modeliste)" /><span>Pattern Maker (Modeliste)</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="garment technician / technical designer" /><span>garment technician / technical designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="3D designer" /><span>3D designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="graphic designer" /><span>graphic designer</span></label>
+            <label class="chip cw"><input type="checkbox" name="Position" value="accessory designer" /><span>accessory designer</span></label>
           </div>
         </div>
 

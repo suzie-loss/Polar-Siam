@@ -183,6 +183,7 @@ let joinAdvanceArmed = false;
 let joinAdvanceTriggered = false;
 const rolesLookbookSection = document.querySelector(".roles");
 const rolesLookbookCards = [...document.querySelectorAll(".role-grid .role-card")];
+const rolesLookbookMobileQuery = window.matchMedia("(max-width: 760px)");
 let rolesLookbookTimers = [];
 
 function clearRolesLookbookTimers() {
@@ -198,7 +199,7 @@ function getRolesLookbookOrder() {
     })
     .sort((a, b) => {
       const rowDelta = Math.abs(a.top - b.top);
-      if (rowDelta > 12) return b.top - a.top; // bottom row first
+      if (rowDelta > 12) return a.top - b.top; // top row first
       return a.left - b.left; // left to right within each row
     })
     .map((entry) => entry.card);
@@ -209,7 +210,7 @@ function queueRolesLookbook(visible) {
   clearRolesLookbookTimers();
 
   const ordered = getRolesLookbookOrder();
-  if (reduce) {
+  if (reduce || rolesLookbookMobileQuery.matches) {
     ordered.forEach((card) => card.classList.toggle("is-visible", visible));
     return;
   }
@@ -223,7 +224,7 @@ function queueRolesLookbook(visible) {
 
 function initRolesLookbookReveal() {
   if (!rolesLookbookSection || !rolesLookbookCards.length) return;
-  if (reduce) {
+  if (reduce || rolesLookbookMobileQuery.matches) {
     rolesLookbookCards.forEach((card) => card.classList.add("is-visible"));
     return;
   }
