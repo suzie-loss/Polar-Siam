@@ -201,6 +201,25 @@
     height: auto;
     object-fit: contain;
   }
+  .logo-preview-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(96vw, 760px);
+    min-height: min(72svh, 620px);
+    padding: 1.25rem;
+    background: var(--bg);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, var(--bg) 86%);
+    border-radius: 10px;
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.62);
+  }
+  .logo-preview-card img {
+    display: block;
+    width: min(90vw, 680px);
+    max-height: 66svh;
+    height: auto;
+    object-fit: contain;
+  }
   body.logo-preview-open {
     overflow: hidden;
   }
@@ -272,7 +291,9 @@
   </section>
 
   <div class="logo-preview-overlay" id="logoPreviewOverlay" aria-hidden="true">
-    <img src="assets/logo/companystory.svg" alt="Polar Siam logo preview" />
+    <div class="logo-preview-card" id="logoPreviewCard">
+      <img src="assets/logo/companystory.svg" alt="Polar Siam logo preview" />
+    </div>
   </div>
 
   <!-- ============ 2 · SCROLLING BAR ============ -->
@@ -343,8 +364,9 @@
     const mobileQuery = window.matchMedia('(max-width: 760px)');
     const logo = document.querySelector('.st-logo-mid img');
     const overlay = document.getElementById('logoPreviewOverlay');
+    const previewCard = document.getElementById('logoPreviewCard');
 
-    if (!logo || !overlay) return;
+    if (!logo || !overlay || !previewCard) return;
 
     const openPreview = () => {
       if (!mobileQuery.matches) return;
@@ -360,6 +382,9 @@
     };
 
     logo.addEventListener('click', openPreview);
+    previewCard.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
     overlay.addEventListener('click', closePreview);
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closePreview();
