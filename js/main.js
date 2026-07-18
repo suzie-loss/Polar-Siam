@@ -542,45 +542,22 @@ function initApplyForm() {
   const selectedLine = document.getElementById("applySelected");
   const roleCards = [...document.querySelectorAll(".role-card")];
   const btn = form.querySelector("button[type=submit]");
-  const chipInputs = [...form.querySelectorAll(".chip input")];
-  const positionInputs = chipInputs.filter((inp) => inp.name === "Position");
+  const roleValueInput = form.querySelector("#applyRoleValue") || form.querySelector('input[name="Position"]');
+  let selectedRole = null;
 
-  const syncChip = (inp) => inp.closest(".chip")?.classList.toggle("is-on", inp.checked);
-
-  const syncRoleStateFromForm = (preferredRole) => {
-    const checkedRoles = positionInputs.filter((inp) => inp.checked).map((inp) => inp.value);
-    const selectedRole =
-      preferredRole && checkedRoles.includes(preferredRole)
-        ? preferredRole
-        : (checkedRoles[checkedRoles.length - 1] || null);
+  const syncRoleState = (role) => {
+    selectedRole = role || null;
+    if (roleValueInput) roleValueInput.value = selectedRole || "";
 
     roleCards.forEach((card) => card.classList.toggle("is-selected", !!selectedRole && card.dataset.role === selectedRole));
 
-    if (selectedLine) {
-      if (!checkedRoles.length) selectedLine.textContent = "";
-      else if (checkedRoles.length === 1) selectedLine.textContent = `Selected: ${checkedRoles[0]}`;
-      else selectedLine.textContent = `Selected: ${selectedRole} + ${checkedRoles.length - 1} more`;
-    }
-
-    form.classList.toggle("apply__form--locked", checkedRoles.length === 0);
+    if (selectedLine) selectedLine.textContent = selectedRole ? `Selected: ${selectedRole}` : "";
+    form.classList.toggle("apply__form--locked", !selectedRole);
   };
-
-  chipInputs.forEach((inp) => {
-    inp.addEventListener("change", () => {
-      syncChip(inp);
-      if (inp.name === "Position") syncRoleStateFromForm(inp.checked ? inp.value : null);
-    });
-    syncChip(inp);
-  });
 
   const pickRole = (role) => {
     if (!role) return;
-    // Grid behaves as single-choice selector: switching cards updates form selection.
-    positionInputs.forEach((inp) => {
-      inp.checked = inp.value === role;
-      syncChip(inp);
-    });
-    syncRoleStateFromForm(role);
+    syncRoleState(role);
     form.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -598,6 +575,7 @@ function initApplyForm() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (!selectedRole) { say("Please select one role from the boxes above.", "err"); return; }
     if (!form.reportValidity()) return;           // native email validation
     say("Sending…", "info");
     if (btn) btn.disabled = true;
@@ -609,8 +587,7 @@ function initApplyForm() {
       });
       if (!res.ok) throw new Error("HTTP " + res.status);
       form.reset();
-      chipInputs.forEach((inp) => syncChip(inp));
-      syncRoleStateFromForm(null);
+      syncRoleState(null);
       say("Application sent — we'll be in touch.", "ok");
     } catch (_) {
       say("Couldn't send just now — email studio@polarsiam.com.", "err");
@@ -618,6 +595,8 @@ function initApplyForm() {
       if (btn) btn.disabled = false;
     }
   });
+
+  syncRoleState(null);
 }
 
 // ---------------------------------------------------------------

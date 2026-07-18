@@ -290,7 +290,7 @@
       <p class="section-tag cw">Select one from the lookbook</p>
     </div>
     <div class="role-grid">
-      <button class="role-card" type="button" data-role="creative director" data-cursor="hover">
+      <button class="role-card" type="button" data-role="Creative Director" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
         <span class="role-card__k">I</span><span class="role-card__title">Creative Director</span><span class="role-card__hint">Select</span>
       </button>
@@ -334,7 +334,7 @@
     <div class="apply__wrap">
       <div class="apply__head">
         <h2 class="section-title cw">Apply</h2>
-        <p class="apply__intro cw">Choose a role from the lookbook above. The form unlocks once a role is selected.</p>
+        <p class="apply__intro cw">Choose one role from the boxes above. Your selected role will be submitted with your application.</p>
         <p class="apply__selected" id="applySelected"></p>
       </div>
 
@@ -344,25 +344,12 @@
           <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" data-cursor="hover" />
         </label>
 
-        <div class="field">
-          <span class="field__label cw">What are you applying for? <em>— select any</em></span>
-          <div class="chips">
-            <label class="chip cw"><input type="checkbox" name="Position" value="Creative Director" /><span>Creative Director</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Fashion Designer / Apparel Designer" /><span>Fashion Designer / Apparel Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Textile / Fabric Developer" /><span>Textile / Fabric Developer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Color & Material Designer (CMF)" /><span>Color & Material Designer (CMF)</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Pattern Maker (Modeliste)" /><span>Pattern Maker (Modeliste)</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Garment Technician / Technical Designer" /><span>Garment Technician / Technical Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="3D Designer" /><span>3D Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Graphic Designer" /><span>Graphic Designer</span></label>
-            <label class="chip cw"><input type="checkbox" name="Position" value="Accessory Designer" /><span>Accessory Designer</span></label>
-          </div>
-        </div>
-
         <label class="field cw">
           <span class="field__label">Message</span>
           <textarea name="message" rows="4" placeholder="A few lines about you — and a link to your work." data-cursor="hover"></textarea>
         </label>
+
+        <input type="hidden" name="Position" id="applyRoleValue" value="" />
 
         <!-- FormSubmit config (delivers to the studio inbox) -->
         <input type="hidden" name="_subject" value="New application — Polar Siam" />
