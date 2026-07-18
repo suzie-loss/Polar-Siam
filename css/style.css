@@ -636,8 +636,8 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .join__title .word { display: inline-block; transform: none; opacity: var(--join-start-opacity); }
 /* Triangular text rhythm: each line steps down; lines 4/5/6 share the same size */
 .join__title .line:nth-child(1) .word { font-size: 1em; }
-.join__title .line:nth-child(2) .word { font-size: 0.96em; }
-.join__title .line:nth-child(3) .word { font-size: 0.8em; }
+.join__title .line:nth-child(2) .word { font-size: 1em; }
+.join__title .line:nth-child(3) .word { font-size: 1em; }
 .join__title .line:nth-child(4) .word,
 .join__title .line:nth-child(5) .word,
 .join__title .line:nth-child(6) .word { font-size: 0.7em; }
