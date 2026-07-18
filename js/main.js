@@ -166,6 +166,7 @@ const joinWords = [...document.querySelectorAll(".join__title .word")];
 const joinButton = document.querySelector(".join__cta-btn");
 const joinRevealEls = joinButton ? [...joinWords, joinButton] : [...joinWords];
 const joinAdvanceTarget = document.querySelector("#lookbook");
+const joinAdvanceMobileQuery = window.matchMedia("(max-width: 760px)");
 const joinReadingSpeed = (() => {
   if (!joinSection) return 1.5;
   const v = parseFloat(joinSection.dataset.readingSpeed || "1.5");
@@ -301,6 +302,7 @@ function updateJoinTitleProgress() {
 }
 
 function maybeAdvanceFromJoin(scrollingDown) {
+  if (!joinAdvanceMobileQuery.matches) return;
   if (!joinSection || !joinAdvanceTarget || !joinAdvanceArmed || joinAdvanceTriggered || !scrollingDown) return;
 
   const rect = joinSection.getBoundingClientRect();
