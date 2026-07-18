@@ -165,6 +165,11 @@
     .role-card__title {
       font-size: clamp(1.1rem, 4.4vw, 1.35rem);
     }
+    .role-grid .role-card:nth-child(9) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, 240px);
+    }
   }
   @media (max-width: 760px) {
     .role-card {
@@ -175,7 +180,7 @@
     }
   }
   @media (max-width: 460px) {
-    .role-grid { grid-template-columns: 1fr; }
+    .role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   /* ===== scroll-reveal · "Passe-Partout" (clip-path mount, GPU-cheap, settles) ===== */
