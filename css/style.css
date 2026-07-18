@@ -640,7 +640,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .join__title .line:nth-child(3) .word { font-size: 0.88em; }
 .join__title .line:nth-child(4) .word,
 .join__title .line:nth-child(5) .word,
-.join__title .line:nth-child(6) .word { font-size: 1rem; }
+.join__title .line:nth-child(6) .word { font-size: 1em; }
 .join__title .line:nth-child(4) .word,
 .join__title .line:nth-child(6) .word {
   position: relative;
