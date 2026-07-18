@@ -165,6 +165,7 @@ const joinTitle = document.querySelector(".join__title");
 const joinWords = [...document.querySelectorAll(".join__title .word")];
 const joinButton = document.querySelector(".join__cta-btn");
 const joinRevealEls = joinButton ? [...joinWords, joinButton] : [...joinWords];
+const joinAdvanceTarget = document.querySelector("#lookbook");
 const joinReadingSpeed = (() => {
   if (!joinSection) return 1.5;
   const v = parseFloat(joinSection.dataset.readingSpeed || "1.5");
@@ -175,6 +176,10 @@ const joinStartOpacity = (() => {
   const v = parseFloat(joinSection.dataset.textStartOpacity || "0.22");
   return Number.isFinite(v) ? Math.max(0, Math.min(0.9, v)) : 0.22;
 })();
+let lastKnownScroll = 0;
+let joinRevealComplete = false;
+let joinAdvanceArmed = false;
+let joinAdvanceTriggered = false;
 const rolesLookbookSection = document.querySelector(".roles");
 const rolesLookbookCards = [...document.querySelectorAll(".role-grid .role-card")];
 let rolesLookbookTimers = [];
@@ -279,6 +284,15 @@ function updateJoinTitleProgress() {
   const p = Math.pow(pRaw, joinReadingSpeed);
   const seg = 1 / joinRevealEls.length;
 
+  const nowComplete = pRaw >= 0.995;
+  if (nowComplete && !joinRevealComplete && !joinAdvanceTriggered) joinAdvanceArmed = true;
+  // Re-arm after user scrolls back up enough to replay the section.
+  if (!nowComplete && pRaw < 0.82) {
+    joinAdvanceTriggered = false;
+    joinAdvanceArmed = false;
+  }
+  joinRevealComplete = nowComplete;
+
   joinRevealEls.forEach((w, i) => {
     const lp = Math.max(0, Math.min(1, (p - i * seg) / seg));
     const base = i < joinWords.length ? joinStartOpacity : 0;
@@ -286,11 +300,32 @@ function updateJoinTitleProgress() {
   });
 }
 
+function maybeAdvanceFromJoin(scrollingDown) {
+  if (!joinSection || !joinAdvanceTarget || !joinAdvanceArmed || joinAdvanceTriggered || !scrollingDown) return;
+
+  const rect = joinSection.getBoundingClientRect();
+  const inPinnedZone = rect.top <= window.innerHeight * 0.12 && rect.bottom >= window.innerHeight * 0.42;
+  if (!inPinnedZone) return;
+
+  joinAdvanceTriggered = true;
+  joinAdvanceArmed = false;
+
+  if (lenis && !reduce) {
+    lenis.scrollTo(joinAdvanceTarget, { duration: 1.05, offset: 0 });
+    return;
+  }
+  joinAdvanceTarget.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
+
 function updateScrollDriven(scroll, velocity = 0) {
+  const scrollingDown = scroll > lastKnownScroll + 0.5;
+  lastKnownScroll = scroll;
+
   updateTurntables();
   updateFx();
   updateAssemble();
   updateJoinTitleProgress();
+  maybeAdvanceFromJoin(scrollingDown);
 
   // capture scroll speed and let marquee consume it with a clear acceleration boost
   marqueeBoost = Math.max(marqueeBoost, Math.min(8, Math.abs(velocity) * 2.6));
