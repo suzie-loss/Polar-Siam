@@ -184,6 +184,8 @@ let joinAdvanceTriggered = false;
 const rolesLookbookSection = document.querySelector(".roles");
 const rolesLookbookCards = [...document.querySelectorAll(".role-grid .role-card")];
 const rolesLookbookMobileQuery = window.matchMedia("(max-width: 760px)");
+let lastRolesScrollY = window.scrollY || 0;
+let rolesLookbookRevealed = false;
 let rolesLookbookTimers = [];
 
 function clearRolesLookbookTimers() {
@@ -230,8 +232,20 @@ function initRolesLookbookReveal() {
   }
 
   const io = new IntersectionObserver((entries) => {
+    const currentScrollY = window.scrollY || 0;
+    const scrollingDown = currentScrollY >= lastRolesScrollY;
+    lastRolesScrollY = currentScrollY;
+
     entries.forEach((entry) => {
-      queueRolesLookbook(entry.isIntersecting);
+      if (!entry.isIntersecting) return;
+      if (rolesLookbookRevealed) return;
+
+      if (scrollingDown) {
+        queueRolesLookbook(true);
+      } else {
+        rolesLookbookCards.forEach((card) => card.classList.add("is-visible"));
+      }
+      rolesLookbookRevealed = true;
     });
   }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
 
