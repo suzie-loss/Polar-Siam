@@ -685,10 +685,10 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 
 /* Apply-now CTA button */
 .join__cta-btn {
-  display: inline-block; margin-top: 1rem;
+  display: inline-block; margin-top: 1.8rem;
   background: var(--ink); color: var(--bg);
   border: 1px solid var(--ink); border-radius: 100px;
-  padding: 1.1rem 2.8rem; font-size: 0.92rem;
+  padding: 1.25rem 3.3rem; font-size: 1rem;
   letter-spacing: 0.11em; text-transform: uppercase; font-weight: 500;
   opacity: 0;
   transition: background .45s var(--ease), color .45s var(--ease);
@@ -696,9 +696,13 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .join__cta-btn:hover { background: transparent; color: var(--ink); }
 
 @media (max-width: 760px) {
+  .join__title {
+    line-height: 1.08;
+  }
   .join__cta-btn {
-    padding: 0.82rem 2rem;
-    font-size: 0.78rem;
+    margin-top: 1rem;
+    padding: 0.68rem 1.55rem;
+    font-size: 0.72rem;
     letter-spacing: 0.09em;
   }
 }
