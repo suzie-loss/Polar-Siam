@@ -634,12 +634,15 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 }
 .join__title .line { display: block; overflow: hidden; }
 .join__title .word { display: inline-block; transform: none; opacity: var(--join-start-opacity); }
-.join__title .line:nth-child(3) .word { font-size: 0.78em; }
-.join__title .line:nth-child(3) .word {
+.join__title .line:nth-child(4) .word,
+.join__title .line:nth-child(6) .word { font-size: 0.78em; }
+.join__title .line:nth-child(4) .word,
+.join__title .line:nth-child(6) .word {
   position: relative;
   padding: 0.02em 0.28em;
 }
-.join__title .line:nth-child(3) .word::after {
+.join__title .line:nth-child(4) .word::after,
+.join__title .line:nth-child(6) .word::after {
   content: "";
   position: absolute;
   left: -0.22em;
