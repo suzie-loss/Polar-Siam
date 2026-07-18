@@ -551,7 +551,10 @@ function initApplyForm() {
 
     roleCards.forEach((card) => card.classList.toggle("is-selected", !!selectedRole && card.dataset.role === selectedRole));
 
-    if (selectedLine) selectedLine.textContent = selectedRole ? `Selected: ${selectedRole}` : "";
+    if (selectedLine) {
+      selectedLine.textContent = selectedRole ? `Selected: ${selectedRole}` : "";
+      selectedLine.classList.toggle("is-on", !!selectedRole);
+    }
     form.classList.toggle("apply__form--locked", !selectedRole);
   };
 

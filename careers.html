@@ -199,7 +199,23 @@
   .apply__wrap { max-width: 720px; margin: 0 auto; }
   .apply__head { margin-bottom: 2.8rem; }
   .apply__intro { color: var(--ink-dim); max-width: 48ch; margin-top: 1rem; line-height: 1.65; }
-  .apply__selected { margin-top: 0.8rem; font-size: 0.78rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--gold); min-height: 1.2em; }
+  .apply__selected {
+    margin-top: 0.8rem;
+    min-height: 1.2em;
+  }
+  .apply__selected.is-on {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.75rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    border: 1px solid var(--ink);
+  }
   .apply__form { display: flex; flex-direction: column; gap: 2.2rem; }
   .apply__form.apply__form--locked { display: none; }
   .field { display: flex; flex-direction: column; gap: 0.8rem; }
