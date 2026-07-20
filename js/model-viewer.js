@@ -30,6 +30,11 @@ export function initModelViewer(container, url) {
   const pivot = new THREE.Group();   // rotate this (model is centred inside it)
   scene.add(pivot);
 
+  let modelRoot = null;
+  let modelCenter = new THREE.Vector3(0, 0, 0);
+  let modelSize = new THREE.Vector3(1, 1, 1);
+  let mobileFocusMode = false;
+
   // ---- interaction: horizontal drag → rotation.y, with momentum ----
   let rotY = 0, velocity = 0, dragging = false, lastX = 0, loaded = false;
   const SENS = 0.0095;   // radians per pixel
@@ -57,25 +62,20 @@ export function initModelViewer(container, url) {
     url,
     (gltf) => {
       const model = gltf.scene;
+      modelRoot = model;
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
+      modelCenter.copy(center);
+      modelSize.copy(size);
       // Centre VERTICALLY on the figure; keep x/z as authored (figures export on the origin).
       // Robust to a stray/offset mesh that would otherwise skew the bbox centre & size.
       model.position.set(0, -center.y, 0);
       pivot.add(model);
 
-      // Frame by HEIGHT so one over-wide mesh can't shrink the figure.
-      const fov = camera.fov * Math.PI / 180;
-      let dist = (size.y / 2) / Math.tan(fov / 2);
-      dist *= 1.4;                           // breathing room
-      camera.position.set(0, 0, dist);
-      camera.near = dist / 100; camera.far = dist * 100;
-      camera.updateProjectionMatrix();
-      camera.lookAt(0, 0, 0);
-
       loaded = true;
       container.classList.add("is-loaded");
+      resize();
     },
     undefined,
     (err) => { console.error("[model-viewer] failed to load", url, err); container.classList.add("is-error"); }
@@ -87,10 +87,43 @@ export function initModelViewer(container, url) {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+
+    // Default framing (desktop and in-tile): preserve existing look.
+    const fov = camera.fov * Math.PI / 180;
+    const distY = (Math.max(modelSize.y, 0.001) / 2) / Math.tan(fov / 2);
+    let dist = distY * 1.4;
+
+    // Mobile popup framing: fit both width/height and add breathing room.
+    if (mobileFocusMode) {
+      const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
+      dist = Math.max(distY, distX) * 1.9;
+    }
+
+    camera.position.set(0, 0, dist);
+    camera.near = Math.max(dist / 100, 0.01);
+    camera.far = dist * 100;
     camera.updateProjectionMatrix();
+    camera.lookAt(0, 0, 0);
   }
   new ResizeObserver(resize).observe(container);
   resize();
+
+  function setFocusMode(enabled) {
+    mobileFocusMode = !!enabled;
+    if (modelRoot) {
+      if (mobileFocusMode) {
+        // Center full model in popup so body isn't cropped on small screens.
+        modelRoot.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z);
+      } else {
+        // Preserve original desktop framing.
+        modelRoot.position.set(0, -modelCenter.y, 0);
+      }
+    }
+    resize();
+  }
+
+  container.__mvSetFocusMode = setFocusMode;
+  container.__mvResize = resize;
 
   // ---- only render while on screen ----
   let inView = true;
@@ -161,6 +194,13 @@ function openLookbookFocus(viewerEl) {
   activeNextSibling = viewerEl.nextSibling;
 
   focusStage.appendChild(viewerEl);
+  if (typeof viewerEl.__mvSetFocusMode === "function") {
+    viewerEl.__mvSetFocusMode(window.matchMedia("(max-width: 760px)").matches);
+  }
+  if (typeof viewerEl.__mvResize === "function") {
+    viewerEl.__mvResize();
+    requestAnimationFrame(() => viewerEl.__mvResize());
+  }
   focusOverlay.classList.add("is-open");
   focusOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("lookbook-focus-open");
@@ -180,6 +220,13 @@ function closeLookbookFocus() {
     activeParent.insertBefore(activeViewer, activeNextSibling);
   } else {
     activeParent.appendChild(activeViewer);
+  }
+
+  if (typeof activeViewer.__mvSetFocusMode === "function") {
+    activeViewer.__mvSetFocusMode(false);
+  }
+  if (typeof activeViewer.__mvResize === "function") {
+    activeViewer.__mvResize();
   }
 
   activeViewer = null;
