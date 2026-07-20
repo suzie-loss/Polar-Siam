@@ -598,7 +598,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .look--model { background: linear-gradient(180deg, #efefec, #e2e2de); }
 .look--model .model-viewer {
   position: absolute;
-  inset: 8% 8% 15% 8%;
+  inset: 6.5% 6.5% 13% 6.5%;
   width: auto;
   height: auto;
   z-index: 1;
@@ -651,7 +651,7 @@ body.lookbook-focus-open { overflow: hidden; }
 @media (max-width: 760px) {
   .lookbook__grid { grid-template-columns: 1fr; }
   .look--tall { margin-top: 0; }
-  .look--model .model-viewer { inset: 9% 9% 16% 9%; }
+  .look--model .model-viewer { inset: 7.5% 7.5% 14% 7.5%; }
   .lookbook-focus-card { width: min(96vw, 760px); height: min(76svh, 640px); }
 }
 
