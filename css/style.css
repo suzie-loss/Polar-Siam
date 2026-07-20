@@ -670,6 +670,10 @@ body.lookbook-focus-open { overflow: hidden; }
     width: 100% !important;
     height: 100% !important;
   }
+  .lookbook-focus-stage > .model-viewer.is-mobile-focus {
+    transform: scale(1.22);
+    transform-origin: center;
+  }
 }
 
 /* ============ STORY ============ */
