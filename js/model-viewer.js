@@ -96,7 +96,7 @@ export function initModelViewer(container, url) {
     // Mobile popup framing: fit both width/height and add breathing room.
     if (mobileFocusMode) {
       const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
-      dist = Math.max(distY, distX) * 1.9;
+      dist = Math.max(distY, distX) * 2.2;
     }
 
     camera.position.set(0, 0, dist);
@@ -112,8 +112,9 @@ export function initModelViewer(container, url) {
     mobileFocusMode = !!enabled;
     if (modelRoot) {
       if (mobileFocusMode) {
-        // Center full model in popup so body isn't cropped on small screens.
-        modelRoot.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z);
+        // Mobile popup only: nudge model left and keep full-body framing.
+        const mobileLeftNudge = modelSize.x * 0.12;
+        modelRoot.position.set(-modelCenter.x - mobileLeftNudge, -modelCenter.y, -modelCenter.z);
       } else {
         // Preserve original desktop framing.
         modelRoot.position.set(0, -modelCenter.y, 0);
