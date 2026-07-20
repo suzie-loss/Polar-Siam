@@ -119,3 +119,96 @@ const _mvIO = new IntersectionObserver((entries, obs) => {
   });
 }, { rootMargin: "300px 0px" });
 document.querySelectorAll(".model-viewer[data-src]").forEach((el) => _mvIO.observe(el));
+
+// ---------------------------------------------------------------
+// Focus preview overlay: tap/click a lookbook model to open a larger view
+// while preserving the same interactive viewer instance (drag/rotate).
+// ---------------------------------------------------------------
+let focusOverlay = null;
+let focusStage = null;
+let activeViewer = null;
+let activeParent = null;
+let activeNextSibling = null;
+
+function ensureFocusOverlay() {
+  if (focusOverlay) return;
+  focusOverlay = document.createElement("div");
+  focusOverlay.className = "lookbook-focus-overlay";
+  focusOverlay.setAttribute("aria-hidden", "true");
+  focusOverlay.innerHTML = '<div class="lookbook-focus-card"><div class="lookbook-focus-stage" id="lookbookFocusStage"></div></div>';
+  document.body.appendChild(focusOverlay);
+  focusStage = focusOverlay.querySelector("#lookbookFocusStage");
+
+  focusOverlay.addEventListener("click", closeLookbookFocus);
+  focusOverlay.querySelector(".lookbook-focus-card")?.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeLookbookFocus();
+  });
+}
+
+function openLookbookFocus(viewerEl) {
+  if (!viewerEl) return;
+  ensureFocusOverlay();
+  if (!focusOverlay || !focusStage) return;
+  if (activeViewer === viewerEl && focusOverlay.classList.contains("is-open")) return;
+
+  if (activeViewer) closeLookbookFocus();
+
+  activeViewer = viewerEl;
+  activeParent = viewerEl.parentNode;
+  activeNextSibling = viewerEl.nextSibling;
+
+  focusStage.appendChild(viewerEl);
+  focusOverlay.classList.add("is-open");
+  focusOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("lookbook-focus-open");
+}
+
+function closeLookbookFocus() {
+  if (!activeViewer || !activeParent) {
+    if (focusOverlay) {
+      focusOverlay.classList.remove("is-open");
+      focusOverlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lookbook-focus-open");
+    }
+    return;
+  }
+
+  if (activeNextSibling && activeNextSibling.parentNode === activeParent) {
+    activeParent.insertBefore(activeViewer, activeNextSibling);
+  } else {
+    activeParent.appendChild(activeViewer);
+  }
+
+  activeViewer = null;
+  activeParent = null;
+  activeNextSibling = null;
+
+  if (focusOverlay) {
+    focusOverlay.classList.remove("is-open");
+    focusOverlay.setAttribute("aria-hidden", "true");
+  }
+  document.body.classList.remove("lookbook-focus-open");
+}
+
+document.querySelectorAll(".look--model .model-viewer[data-src]").forEach((viewer) => {
+  let startX = 0;
+  let startY = 0;
+  let moved = false;
+
+  viewer.addEventListener("pointerdown", (event) => {
+    startX = event.clientX;
+    startY = event.clientY;
+    moved = false;
+  });
+
+  viewer.addEventListener("pointermove", (event) => {
+    if (Math.abs(event.clientX - startX) > 8 || Math.abs(event.clientY - startY) > 8) moved = true;
+  });
+
+  viewer.addEventListener("pointerup", () => {
+    if (!moved) openLookbookFocus(viewer);
+  });
+});
