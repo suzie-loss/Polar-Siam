@@ -581,7 +581,9 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .lookbook__head { margin-bottom: 3.5rem; }
 .lookbook__grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1rem, 3vw, 3rem); align-items: start;
+  row-gap: clamp(1rem, 3vw, 3rem);
+  column-gap: clamp(1.8rem, 4.4vw, 5rem);
+  align-items: start;
   max-width: 1240px;
   margin: 0 auto;
 }
