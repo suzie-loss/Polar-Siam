@@ -32,6 +32,7 @@ export function initModelViewer(container, url) {
 
   let frameSizeX = 1;
   let frameSizeY = 1;
+  const TARGET_MODEL_HEIGHT = 2.2;
 
   // ---- interaction: horizontal drag → rotation.y, with momentum ----
   let rotY = 0, velocity = 0, dragging = false, lastX = 0, loaded = false;
@@ -62,13 +63,20 @@ export function initModelViewer(container, url) {
       const model = gltf.scene;
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
-      const center = box.getCenter(new THREE.Vector3());
+
+      // Normalize all models to a consistent world height so previews match visually.
+      const uniformScale = TARGET_MODEL_HEIGHT / Math.max(size.y, 0.001);
+      model.scale.setScalar(uniformScale);
+
+      const scaledBox = new THREE.Box3().setFromObject(model);
+      const scaledSize = scaledBox.getSize(new THREE.Vector3());
+      const center = scaledBox.getCenter(new THREE.Vector3());
       // Fully center the model so focused/mobile previews cannot appear shifted or cropped.
       model.position.set(-center.x, -center.y, -center.z);
       pivot.add(model);
 
-      frameSizeX = Math.max(size.x, 0.001);
-      frameSizeY = Math.max(size.y, 0.001);
+      frameSizeX = Math.max(scaledSize.x, 0.001);
+      frameSizeY = Math.max(scaledSize.y, 0.001);
 
       resize();
 
@@ -90,7 +98,9 @@ export function initModelViewer(container, url) {
     const fov = camera.fov * Math.PI / 180;
     const distY = (frameSizeY / 2) / Math.tan(fov / 2);
     const distX = (frameSizeX / 2) / (Math.tan(fov / 2) * camera.aspect);
-    const dist = Math.max(distY, distX) * 1.4;
+    const isFocusedPreview = container.closest(".lookbook-focus-stage") !== null;
+    const mobileBoost = isFocusedPreview && window.matchMedia("(max-width: 760px)").matches ? 1.22 : 1;
+    const dist = Math.max(distY, distX) * 1.4 * mobileBoost;
 
     camera.position.set(0, 0, dist);
     camera.near = Math.max(dist / 100, 0.01);
@@ -98,6 +108,7 @@ export function initModelViewer(container, url) {
     camera.updateProjectionMatrix();
     camera.lookAt(0, 0, 0);
   }
+  container.__mvResize = resize;
   new ResizeObserver(resize).observe(container);
   resize();
 
@@ -170,6 +181,10 @@ function openLookbookFocus(viewerEl) {
   activeNextSibling = viewerEl.nextSibling;
 
   focusStage.appendChild(viewerEl);
+  if (typeof viewerEl.__mvResize === "function") {
+    viewerEl.__mvResize();
+    requestAnimationFrame(() => viewerEl.__mvResize());
+  }
   focusOverlay.classList.add("is-open");
   focusOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("lookbook-focus-open");
