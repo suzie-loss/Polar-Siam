@@ -650,10 +650,15 @@ body.lookbook-focus-open { overflow: hidden; }
   font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink);
   mix-blend-mode: difference;
 }
+.look__tap-hint { display: inline; }
 @media (max-width: 760px) {
   .lookbook__grid { grid-template-columns: 1fr; }
   .look--tall { margin-top: 0; }
   .look--model .model-viewer { inset: 7.5% 7.5% 14% 7.5%; }
+  .look__tap-hint {
+    display: block;
+    margin-top: 0.22rem;
+  }
   .lookbook-focus-overlay { padding: 0.45rem; }
   .lookbook-focus-card {
     width: 98vw;
