@@ -161,6 +161,9 @@ function openLookbookFocus(viewerEl) {
   activeNextSibling = viewerEl.nextSibling;
 
   focusStage.appendChild(viewerEl);
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    viewerEl.classList.add("is-mobile-focus");
+  }
   focusOverlay.classList.add("is-open");
   focusOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("lookbook-focus-open");
@@ -181,6 +184,8 @@ function closeLookbookFocus() {
   } else {
     activeParent.appendChild(activeViewer);
   }
+
+  activeViewer.classList.remove("is-mobile-focus");
 
   activeViewer = null;
   activeParent = null;

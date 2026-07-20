@@ -582,7 +582,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .lookbook__grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: clamp(1rem, 3vw, 3rem); align-items: start;
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 .look {
@@ -598,7 +598,7 @@ section { padding: clamp(5rem, 14vh, 12rem) var(--pad); }
 .look--model { background: linear-gradient(180deg, #efefec, #e2e2de); }
 .look--model .model-viewer {
   position: absolute;
-  inset: 6.5% 6.5% 13% 6.5%;
+  inset: 2% 2% 8% 2%;
   width: auto;
   height: auto;
   z-index: 1;
@@ -652,7 +652,21 @@ body.lookbook-focus-open { overflow: hidden; }
   .lookbook__grid { grid-template-columns: 1fr; }
   .look--tall { margin-top: 0; }
   .look--model .model-viewer { inset: 7.5% 7.5% 14% 7.5%; }
-  .lookbook-focus-card { width: min(96vw, 760px); height: min(76svh, 640px); }
+  .lookbook-focus-overlay { padding: 0.45rem; }
+  .lookbook-focus-card {
+    width: 98vw;
+    height: min(88svh, 760px);
+    padding: 0.45rem;
+  }
+  .lookbook-focus-stage > .model-viewer {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .lookbook-focus-stage > .model-viewer.is-mobile-focus {
+    transform: scale(1.22);
+    transform-origin: center;
+  }
 }
 
 /* ============ STORY ============ */
