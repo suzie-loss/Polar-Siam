@@ -30,9 +30,6 @@ export function initModelViewer(container, url) {
   const pivot = new THREE.Group();   // rotate this (model is centred inside it)
   scene.add(pivot);
 
-  let frameSizeX = 1;
-  let frameSizeY = 1;
-
   // ---- interaction: horizontal drag → rotation.y, with momentum ----
   let rotY = 0, velocity = 0, dragging = false, lastX = 0, loaded = false;
   const SENS = 0.0095;   // radians per pixel
@@ -63,14 +60,19 @@ export function initModelViewer(container, url) {
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
-      // Fully center the model so focused/mobile previews cannot appear shifted or cropped.
-      model.position.set(-center.x, -center.y, -center.z);
+      // Centre VERTICALLY on the figure; keep x/z as authored (figures export on the origin).
+      // Robust to a stray/offset mesh that would otherwise skew the bbox centre & size.
+      model.position.set(0, -center.y, 0);
       pivot.add(model);
 
-      frameSizeX = Math.max(size.x, 0.001);
-      frameSizeY = Math.max(size.y, 0.001);
-
-      resize();
+      // Frame by HEIGHT so one over-wide mesh can't shrink the figure.
+      const fov = camera.fov * Math.PI / 180;
+      let dist = (size.y / 2) / Math.tan(fov / 2);
+      dist *= 1.4;                           // breathing room
+      camera.position.set(0, 0, dist);
+      camera.near = dist / 100; camera.far = dist * 100;
+      camera.updateProjectionMatrix();
+      camera.lookAt(0, 0, 0);
 
       loaded = true;
       container.classList.add("is-loaded");
@@ -85,18 +87,7 @@ export function initModelViewer(container, url) {
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-
-    // Fit both model height and width so portrait mobile popups don't crop the model.
-    const fov = camera.fov * Math.PI / 180;
-    const distY = (frameSizeY / 2) / Math.tan(fov / 2);
-    const distX = (frameSizeX / 2) / (Math.tan(fov / 2) * camera.aspect);
-    const dist = Math.max(distY, distX) * 1.4;
-
-    camera.position.set(0, 0, dist);
-    camera.near = Math.max(dist / 100, 0.01);
-    camera.far = dist * 100;
     camera.updateProjectionMatrix();
-    camera.lookAt(0, 0, 0);
   }
   new ResizeObserver(resize).observe(container);
   resize();
