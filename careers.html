@@ -19,16 +19,8 @@
 <style>
   [data-fx] { will-change: transform, opacity; backface-visibility: hidden; }
 
-  /* announcement */
-  .hire { min-height: 92svh; display: grid; place-items: center; text-align: center; padding: 9rem 1.5rem 3rem; }
-  .hire__idx { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6rem; }
-  .hire h1 { font-family: var(--f-serif); font-weight: 500; text-transform: uppercase; font-size: clamp(3rem, 12vw, 9rem); line-height: 0.86; }
-  .hire h1 em { font-style: italic; text-transform: none; }
-  .hire p { color: var(--ink-dim); max-width: 48ch; margin: 2rem auto 0; line-height: 1.7; }
-  .hire a.mail { color: var(--ink); border-bottom: 1px solid var(--line); }
-
   /* role selection grid */
-  .roles { padding: clamp(3rem, 8vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem); }
+  .roles { padding: clamp(1.2rem, 3vh, 2rem) var(--pad) clamp(2rem, 6vh, 4rem); }
   .roles__head {
     margin-bottom: clamp(3rem, 8vh, 6rem);
     display: flex;
@@ -290,21 +282,8 @@
 
 <main>
 
-  <!-- ============ 1 · ANNOUNCEMENT ============ -->
-  <section class="hire">
-    <div>
-      <div class="hire__idx cw">Join the House</div>
-      <h1 class="cw">We're<br><em>Hiring</em></h1>
-      <p class="cw">Polar Siam is built by a small team who believe every seam carries meaning. Right now we're looking for three people in particular — and a few more besides.</p>
-    </div>
-  </section>
-
-  <!-- ============ 2 · ROLE LOOKBOOK GRID ============ -->
+  <!-- ============ 1 · ROLE LOOKBOOK GRID ============ -->
   <section class="roles" id="roles">
-    <div class="roles__head">
-      <h2 class="section-title cw">Who we're<br>looking for</h2>
-      <p class="section-tag cw">Select one from the lookbook</p>
-    </div>
     <div class="role-grid">
       <button class="role-card" type="button" data-role="Creative Director" data-cursor="hover">
         <span class="role-card__x" aria-hidden="true">X</span>
@@ -345,7 +324,7 @@
     </div>
   </section>
 
-  <!-- ============ 3 · APPLY FORM ============ -->
+  <!-- ============ 2 · APPLY FORM ============ -->
   <section class="apply" id="apply">
     <div class="apply__wrap">
       <div class="apply__head">
@@ -361,7 +340,7 @@
         </label>
 
         <label class="field cw">
-          <span class="field__label">Message</span>
+          <span class="field__label">NOTE</span>
           <textarea name="message" rows="4" placeholder="A few lines about you — and a link to your work." data-cursor="hover"></textarea>
         </label>
 
