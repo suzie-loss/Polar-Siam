@@ -33,6 +33,7 @@ export function initModelViewer(container, url) {
   let modelRoot = null;
   let modelCenter = new THREE.Vector3(0, 0, 0);
   let modelSize = new THREE.Vector3(1, 1, 1);
+  let mobileFocusMode = false;
 
   // ---- interaction: horizontal drag → rotation.y, with momentum ----
   let rotY = 0, velocity = 0, dragging = false, lastX = 0, loaded = false;
@@ -92,6 +93,12 @@ export function initModelViewer(container, url) {
     const distY = (Math.max(modelSize.y, 0.001) / 2) / Math.tan(fov / 2);
     let dist = distY * 1.4;
 
+    // Mobile popup: fit full width and height so model can't be cropped.
+    if (mobileFocusMode) {
+      const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
+      dist = Math.max(distY, distX) * 1.9;
+    }
+
     camera.position.set(0, 0, dist);
     camera.near = Math.max(dist / 100, 0.01);
     camera.far = dist * 100;
@@ -101,6 +108,21 @@ export function initModelViewer(container, url) {
   new ResizeObserver(resize).observe(container);
   resize();
 
+  function setFocusMode(enabled) {
+    mobileFocusMode = !!enabled;
+    if (modelRoot) {
+      if (mobileFocusMode) {
+        // Recenter full model in popup on mobile to avoid left/right clipping.
+        modelRoot.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z);
+      } else {
+        // Keep original desktop/in-tile composition.
+        modelRoot.position.set(0, -modelCenter.y, 0);
+      }
+    }
+    resize();
+  }
+
+  container.__mvSetFocusMode = setFocusMode;
   container.__mvResize = resize;
 
   // ---- only render while on screen ----
@@ -172,6 +194,9 @@ function openLookbookFocus(viewerEl) {
   activeNextSibling = viewerEl.nextSibling;
 
   focusStage.appendChild(viewerEl);
+  if (typeof viewerEl.__mvSetFocusMode === "function") {
+    viewerEl.__mvSetFocusMode(window.matchMedia("(max-width: 760px)").matches);
+  }
   if (typeof viewerEl.__mvResize === "function") {
     viewerEl.__mvResize();
     requestAnimationFrame(() => viewerEl.__mvResize());
@@ -195,6 +220,10 @@ function closeLookbookFocus() {
     activeParent.insertBefore(activeViewer, activeNextSibling);
   } else {
     activeParent.appendChild(activeViewer);
+  }
+
+  if (typeof activeViewer.__mvSetFocusMode === "function") {
+    activeViewer.__mvSetFocusMode(false);
   }
   if (typeof activeViewer.__mvResize === "function") {
     activeViewer.__mvResize();
