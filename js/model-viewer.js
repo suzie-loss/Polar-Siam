@@ -8,7 +8,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 // Mobile tap-preview tuning.
 // Edit only these values to tweak mobile popup framing.
 const MOBILE_PREVIEW_SETTINGS = {
-  distanceMultiplier: 2.8,  // bigger = more zoom out
+  distanceMultiplier: 5,     // bigger = more zoom out
   xOffsetFactor: -0.05,     // negative = left, positive = right
   yOffsetFactor: 0.02       // negative = down, positive = up
 };
