@@ -93,8 +93,9 @@ export function initModelViewer(container, url) {
     const distY = (Math.max(modelSize.y, 0.001) / 2) / Math.tan(fov / 2);
     let dist = distY * 1.4;
 
-    // Mobile popup: fit full width and height so model can't be cropped.
-    if (mobileFocusMode) {
+    // Mobile popup only: fit full width and height so model can't be cropped.
+    const isInFocusStage = container.closest(".lookbook-focus-stage") !== null;
+    if (mobileFocusMode && isInFocusStage && window.matchMedia("(max-width: 760px)").matches) {
       const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
       dist = Math.max(distY, distX) * 2.45;
     }
@@ -110,15 +111,7 @@ export function initModelViewer(container, url) {
 
   function setFocusMode(enabled) {
     mobileFocusMode = !!enabled;
-    if (modelRoot) {
-      if (mobileFocusMode) {
-        // Keep same composition as desktop; only camera distance changes on mobile popup.
-        modelRoot.position.set(0, -modelCenter.y, 0);
-      } else {
-        // Keep original desktop/in-tile composition.
-        modelRoot.position.set(0, -modelCenter.y, 0);
-      }
-    }
+    // Keep model composition identical; only camera distance changes in mobile popup.
     resize();
   }
 
