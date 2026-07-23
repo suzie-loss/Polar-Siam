@@ -96,7 +96,7 @@ export function initModelViewer(container, url) {
     // Mobile popup: fit full width and height so model can't be cropped.
     if (mobileFocusMode) {
       const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
-      dist = Math.max(distY, distX) * 1.9;
+      dist = Math.max(distY, distX) * 2.45;
     }
 
     camera.position.set(0, 0, dist);
@@ -112,8 +112,8 @@ export function initModelViewer(container, url) {
     mobileFocusMode = !!enabled;
     if (modelRoot) {
       if (mobileFocusMode) {
-        // Recenter full model in popup on mobile to avoid left/right clipping.
-        modelRoot.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z);
+        // Keep same composition as desktop; only camera distance changes on mobile popup.
+        modelRoot.position.set(0, -modelCenter.y, 0);
       } else {
         // Keep original desktop/in-tile composition.
         modelRoot.position.set(0, -modelCenter.y, 0);
