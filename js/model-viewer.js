@@ -9,8 +9,8 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 // Edit only these values to tweak mobile popup framing.
 const MOBILE_PREVIEW_SETTINGS = {
   distanceMultiplier: 5,     // bigger = more zoom out
-  xOffsetFactor: -0.1,      // negative = left, positive = right
-  yOffsetFactor: 0.1        // negative = down, positive = up
+  xOffsetFactor: -2,        // negative = left, positive = right
+  yOffsetFactor: 1          // negative = down, positive = up
 };
 
 export function initModelViewer(container, url) {
