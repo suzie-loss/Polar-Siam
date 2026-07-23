@@ -5,6 +5,14 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
+// Mobile tap-preview tuning.
+// Edit only these values to tweak mobile popup framing.
+const MOBILE_PREVIEW_SETTINGS = {
+  distanceMultiplier: 2.45, // bigger = more zoom out
+  xOffsetFactor: 0.0,       // negative = left, positive = right
+  yOffsetFactor: 0.0        // negative = down, positive = up
+};
+
 export function initModelViewer(container, url) {
   const canvas = document.createElement("canvas");
   canvas.className = "model-viewer__canvas";
@@ -97,7 +105,7 @@ export function initModelViewer(container, url) {
     const isInFocusStage = container.closest(".lookbook-focus-stage") !== null;
     if (mobileFocusMode && isInFocusStage && window.matchMedia("(max-width: 760px)").matches) {
       const distX = (Math.max(modelSize.x, 0.001) / 2) / (Math.tan(fov / 2) * Math.max(camera.aspect, 0.001));
-      dist = Math.max(distY, distX) * 2.45;
+      dist = Math.max(distY, distX) * MOBILE_PREVIEW_SETTINGS.distanceMultiplier;
     }
 
     camera.position.set(0, 0, dist);
@@ -111,7 +119,17 @@ export function initModelViewer(container, url) {
 
   function setFocusMode(enabled) {
     mobileFocusMode = !!enabled;
-    // Keep model composition identical; only camera distance changes in mobile popup.
+    if (modelRoot) {
+      if (mobileFocusMode && window.matchMedia("(max-width: 760px)").matches) {
+        modelRoot.position.set(
+          modelSize.x * MOBILE_PREVIEW_SETTINGS.xOffsetFactor,
+          -modelCenter.y + (modelSize.y * MOBILE_PREVIEW_SETTINGS.yOffsetFactor),
+          0
+        );
+      } else {
+        modelRoot.position.set(0, -modelCenter.y, 0);
+      }
+    }
     resize();
   }
 
