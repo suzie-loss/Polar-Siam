@@ -5,6 +5,18 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
+const EXTERNAL_COLOR_TEXTURES = {
+  "assets/plus.glb": {
+    Cotton_40s_Poplin_177540: "assets/Texture/FCL1_PSC009_00_1002619_184706177541.png",
+    Cotton_40s_Poplin_177553: "assets/Texture/FCL1_PSC009_00_1002619_184706177554.png",
+    Cotton_40s_Poplin_177566: "assets/Texture/FCL1_PSC009_00_1002619_184706177567.png",
+    Interlining_Polyester_Satin_Lining_177579: "assets/Texture/Polyester_Satin_Lining_FCL2PSP001_2_test1_COL177580_DiffsueCombined.png",
+  },
+  "assets/t%20shirt%20sans%20manche.glb": {
+    Polar_63791: "assets/Texture/TCom_Overlay_Abstract_header63792.png",
+  },
+};
+
 // Mobile tap-preview tuning.
 // Edit only these values to tweak mobile popup framing.
 const MOBILE_PREVIEW_SETTINGS = {
@@ -37,6 +49,27 @@ export function initModelViewer(container, url) {
 
   const pivot = new THREE.Group();   // rotate this (model is centred inside it)
   scene.add(pivot);
+
+  function applyExternalColorTextures(model) {
+    const textureMap = EXTERNAL_COLOR_TEXTURES[url];
+    if (!textureMap) return;
+
+    const textureLoader = new THREE.TextureLoader();
+    model.traverse((node) => {
+      if (!node.isMesh || !node.material) return;
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach((material) => {
+        const source = textureMap[material.name];
+        if (!source) return;
+        textureLoader.load(source, (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace;
+          material.map = texture;
+          material.color.set(0xffffff);
+          material.needsUpdate = true;
+        });
+      });
+    });
+  }
 
   let modelRoot = null;
   let modelCenter = new THREE.Vector3(0, 0, 0);
@@ -80,6 +113,7 @@ export function initModelViewer(container, url) {
       // Robust to a stray/offset mesh that would otherwise skew the bbox centre & size.
       model.position.set(0, -center.y, 0);
       pivot.add(model);
+      applyExternalColorTextures(model);
 
       loaded = true;
       container.classList.add("is-loaded");
